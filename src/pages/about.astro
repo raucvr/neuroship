@@ -1,62 +1,630 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, COMPANY, GOALS } from '../consts';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage="/blog-placeholder-about.jpg"
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`关于我们 - ${SITE_TITLE}`} description="了解 Neuroship 的使命、愿景和团队" />
+		<style>
+			/* Page Header */
+			.page-header {
+				padding: 10rem 2rem 6rem;
+				text-align: center;
+				position: relative;
+				overflow: hidden;
+			}
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+			.page-header::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 50%;
+				transform: translateX(-50%);
+				width: 150%;
+				height: 100%;
+				background: 
+					radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+					radial-gradient(ellipse at 30% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
+				pointer-events: none;
+				z-index: -1;
+			}
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+			.page-header h1 {
+				font-size: clamp(2.5rem, 6vw, 4rem);
+				margin-bottom: 1.5rem;
+			}
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+			.page-header .lead {
+				max-width: 700px;
+				margin: 0 auto;
+				font-size: 1.2rem;
+				color: var(--text-secondary);
+			}
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+			/* Section Styles */
+			.about-section {
+				padding: 6rem 2rem;
+				max-width: 1200px;
+				margin: 0 auto;
+			}
+
+			.section-divider {
+				height: 1px;
+				background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+				margin: 0;
+			}
+
+			/* Story Section */
+			.story-section {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 4rem;
+				align-items: center;
+			}
+
+			.story-content h2 {
+				margin-bottom: 1.5rem;
+			}
+
+			.story-content p {
+				margin-bottom: 1.5rem;
+				line-height: 1.8;
+			}
+
+			.story-visual {
+				position: relative;
+			}
+
+			.story-card {
+				background: var(--bg-card);
+				border: 1px solid var(--border-color);
+				border-radius: 24px;
+				padding: 3rem;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.story-card::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 3px;
+				background: var(--gradient-primary);
+			}
+
+			.stats-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 2rem;
+			}
+
+			.stat-item {
+				text-align: center;
+			}
+
+			.stat-number {
+				font-size: 2.5rem;
+				font-weight: 800;
+				background: var(--gradient-primary);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+				margin-bottom: 0.5rem;
+			}
+
+			.stat-label {
+				color: var(--text-muted);
+				font-size: 0.9rem;
+			}
+
+			/* Mission Section */
+			.mission-section {
+				background: var(--bg-elevated);
+				padding: 6rem 2rem;
+			}
+
+			.mission-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 2rem;
+				max-width: 1200px;
+				margin: 0 auto;
+			}
+
+			.mission-card {
+				background: var(--bg-card);
+				border: 1px solid var(--border-color);
+				border-radius: 20px;
+				padding: 2rem;
+				text-align: center;
+				transition: all 0.3s ease;
+			}
+
+			.mission-card:hover {
+				border-color: var(--primary);
+				transform: translateY(-4px);
+			}
+
+			.mission-icon {
+				width: 60px;
+				height: 60px;
+				background: var(--gradient-primary);
+				border-radius: 16px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin: 0 auto 1.5rem;
+			}
+
+			.mission-icon svg {
+				width: 28px;
+				height: 28px;
+				color: white;
+			}
+
+			.mission-card h3 {
+				font-size: 1.25rem;
+				margin-bottom: 1rem;
+			}
+
+			.mission-card p {
+				color: var(--text-secondary);
+				font-size: 0.95rem;
+				margin: 0;
+			}
+
+			/* Team Section */
+			.team-section {
+				padding: 6rem 2rem;
+				max-width: 1200px;
+				margin: 0 auto;
+			}
+
+			.team-header {
+				text-align: center;
+				margin-bottom: 4rem;
+			}
+
+			.team-header h2 {
+				margin-bottom: 1rem;
+			}
+
+			.team-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+				gap: 2rem;
+			}
+
+			.team-card {
+				background: var(--bg-card);
+				border: 1px solid var(--border-color);
+				border-radius: 24px;
+				padding: 2.5rem;
+				text-align: center;
+				transition: all 0.4s ease;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.team-card::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 100px;
+				background: var(--gradient-primary);
+				opacity: 0.1;
+			}
+
+			.team-card:hover {
+				border-color: var(--primary);
+				transform: translateY(-8px);
+				box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+			}
+
+			.team-avatar {
+				width: 120px;
+				height: 120px;
+				border-radius: 50%;
+				background: var(--gradient-primary);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin: 0 auto 1.5rem;
+				position: relative;
+				z-index: 1;
+				font-size: 3rem;
+				color: white;
+				font-weight: 700;
+				box-shadow: 0 8px 30px rgba(139, 92, 246, 0.3);
+			}
+
+			.team-card h3 {
+				font-size: 1.5rem;
+				margin-bottom: 0.5rem;
+			}
+
+			.team-role {
+				color: var(--primary-light);
+				font-weight: 500;
+				margin-bottom: 1rem;
+			}
+
+			.team-bio {
+				color: var(--text-secondary);
+				font-size: 0.95rem;
+				line-height: 1.7;
+				margin-bottom: 1.5rem;
+			}
+
+			.team-links {
+				display: flex;
+				justify-content: center;
+				gap: 0.75rem;
+			}
+
+			.team-links a {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 40px;
+				height: 40px;
+				border-radius: 10px;
+				color: var(--text-muted);
+				background: var(--bg-elevated);
+				border: 1px solid var(--border-color);
+				transition: all 0.3s ease;
+			}
+
+			.team-links a:hover {
+				color: var(--primary-light);
+				border-color: var(--primary);
+				background: rgba(139, 92, 246, 0.1);
+			}
+
+			/* Timeline Section */
+			.timeline-section {
+				background: var(--bg-elevated);
+				padding: 6rem 2rem;
+			}
+
+			.timeline-header {
+				text-align: center;
+				margin-bottom: 4rem;
+				max-width: 1200px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			.timeline {
+				max-width: 800px;
+				margin: 0 auto;
+				position: relative;
+			}
+
+			.timeline::before {
+				content: '';
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+				width: 2px;
+				height: 100%;
+				background: var(--border-color);
+			}
+
+			.timeline-item {
+				display: flex;
+				justify-content: flex-end;
+				padding-right: 50%;
+				position: relative;
+				margin-bottom: 3rem;
+			}
+
+			.timeline-item:nth-child(even) {
+				justify-content: flex-start;
+				padding-right: 0;
+				padding-left: 50%;
+			}
+
+			.timeline-content {
+				background: var(--bg-card);
+				border: 1px solid var(--border-color);
+				border-radius: 16px;
+				padding: 1.5rem 2rem;
+				max-width: 350px;
+				position: relative;
+				margin-right: 2rem;
+			}
+
+			.timeline-item:nth-child(even) .timeline-content {
+				margin-right: 0;
+				margin-left: 2rem;
+			}
+
+			.timeline-dot {
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+				width: 16px;
+				height: 16px;
+				background: var(--gradient-primary);
+				border-radius: 50%;
+				border: 3px solid var(--bg-dark);
+			}
+
+			.timeline-year {
+				color: var(--primary-light);
+				font-weight: 600;
+				font-size: 0.875rem;
+				margin-bottom: 0.5rem;
+			}
+
+			.timeline-content h4 {
+				margin-bottom: 0.5rem;
+			}
+
+			.timeline-content p {
+				color: var(--text-muted);
+				font-size: 0.9rem;
+				margin: 0;
+			}
+
+			/* Responsive */
+			@media (max-width: 968px) {
+				.story-section {
+					grid-template-columns: 1fr;
+					gap: 3rem;
+				}
+
+				.mission-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+
+			@media (max-width: 768px) {
+				.page-header {
+					padding: 8rem 1rem 4rem;
+				}
+
+				.about-section,
+				.team-section {
+					padding: 4rem 1rem;
+				}
+
+				.mission-section,
+				.timeline-section {
+					padding: 4rem 1rem;
+				}
+
+				.stats-grid {
+					grid-template-columns: 1fr;
+					gap: 1.5rem;
+				}
+
+				.timeline::before {
+					left: 0;
+				}
+
+				.timeline-item,
+				.timeline-item:nth-child(even) {
+					padding-left: 2rem;
+					padding-right: 0;
+					justify-content: flex-start;
+				}
+
+				.timeline-content,
+				.timeline-item:nth-child(even) .timeline-content {
+					margin-left: 1rem;
+					margin-right: 0;
+					max-width: 100%;
+				}
+
+				.timeline-dot {
+					left: 0;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		
+		<!-- Page Header -->
+		<section class="page-header">
+			<h1>关于 <span class="gradient-text">Neuroship</span></h1>
+			<p class="lead">
+				我们致力于通过神经科学与基因技术的创新，为每一个生命创造更美好的未来。
+			</p>
+		</section>
+
+		<!-- Story Section -->
+		<section class="about-section">
+			<div class="story-section">
+				<div class="story-content">
+					<h2>我们的<span class="gradient-text">故事</span></h2>
+					<p>
+						Neuroship 诞生于一个简单而深刻的信念：科技应该服务于人类最本质的需求——健康、理解与连接。
+					</p>
+					<p>
+						在目睹了无数自闭症家庭面临的挑战后，我们的创始人决心用前沿科技创造改变。
+						从智能眼镜到基因疗法，我们正在一步步将不可能变为可能。
+					</p>
+					<p>
+						我们的名字 "Neuroship" 象征着神经科学领域的一艘航船，
+						承载着希望与创新，驶向一个更包容、更健康的未来。
+					</p>
+				</div>
+				<div class="story-visual">
+					<div class="story-card">
+						<div class="stats-grid">
+							<div class="stat-item">
+								<div class="stat-number">2024</div>
+								<div class="stat-label">成立年份</div>
+							</div>
+							<div class="stat-item">
+								<div class="stat-number">∞</div>
+								<div class="stat-label">无限可能</div>
+							</div>
+							<div class="stat-item">
+								<div class="stat-number">3</div>
+								<div class="stat-label">核心目标</div>
+							</div>
+							<div class="stat-item">
+								<div class="stat-number">1</div>
+								<div class="stat-label">共同使命</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="section-divider"></div>
+
+		<!-- Mission Section -->
+		<section class="mission-section">
+			<div class="team-header">
+				<h2>我们的<span class="gradient-text">核心价值</span></h2>
+				<p class="lead">指引我们前行的原则</p>
+			</div>
+			<div class="mission-grid">
+				<div class="mission-card">
+					<div class="mission-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+						</svg>
+					</div>
+					<h3>以人为本</h3>
+					<p>每一项研究、每一个产品都以改善人类生活质量为最终目标</p>
+				</div>
+				<div class="mission-card">
+					<div class="mission-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<circle cx="12" cy="12" r="10"/>
+							<path d="M12 6v6l4 2"/>
+						</svg>
+					</div>
+					<h3>持续创新</h3>
+					<p>不断探索科学前沿，用创新思维解决最具挑战性的医学难题</p>
+				</div>
+				<div class="mission-card">
+					<div class="mission-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+							<circle cx="9" cy="7" r="4"/>
+							<path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+						</svg>
+					</div>
+					<h3>开放合作</h3>
+					<p>与全球顶尖科研机构和医疗团队紧密合作，共同推进人类健康事业</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Team Section -->
+		<section class="team-section">
+			<div class="team-header">
+				<h2>核心<span class="gradient-text">团队</span></h2>
+				<p class="lead">汇聚热忱与专业的开拓者</p>
+			</div>
+			<div class="team-grid">
+				<!-- Founder Card -->
+				<div class="team-card">
+					<div class="team-avatar">T</div>
+					<h3>Takayuki Ishii</h3>
+					<div class="team-role">Founder & CEO</div>
+					<p class="team-bio">
+						怀揣着改变世界的梦想，致力于通过神经科学与基因技术帮助自闭症患者。
+						相信科技的力量可以让每一个生命都有机会绽放光芒。
+					</p>
+					<div class="team-links">
+						<a href="https://github.com/raucvr" target="_blank" aria-label="GitHub">
+							<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+								<path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+							</svg>
+						</a>
+						<a href="https://www.linkedin.com/in/takayuki-ishii-55b60221b/" target="_blank" aria-label="LinkedIn">
+							<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+								<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+							</svg>
+						</a>
+						<a href="mailto:raucvr@berkeley.edu" aria-label="Email">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+								<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+								<polyline points="22,6 12,13 2,6"/>
+							</svg>
+						</a>
+					</div>
+				</div>
+
+				<!-- 可以添加更多团队成员 -->
+				<div class="team-card">
+					<div class="team-avatar">+</div>
+					<h3>加入我们</h3>
+					<div class="team-role">We're Hiring</div>
+					<p class="team-bio">
+						我们正在寻找志同道合的伙伴，如果你对神经科学、基因技术、AI或产品设计充满热情，欢迎联系我们。
+					</p>
+					<div class="team-links">
+						<a href="mailto:careers@neuroship.com" aria-label="Email" style="width: auto; padding: 0 1rem;">
+							<span style="margin-right: 0.5rem;">投递简历</span>
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+								<path d="M5 12h14M12 5l7 7-7 7"/>
+							</svg>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Timeline Section -->
+		<section class="timeline-section">
+			<div class="timeline-header">
+				<h2>发展<span class="gradient-text">历程</span></h2>
+				<p class="lead">我们的旅程才刚刚开始</p>
+			</div>
+			<div class="timeline">
+				<div class="timeline-item">
+					<div class="timeline-dot"></div>
+					<div class="timeline-content">
+						<div class="timeline-year">2024</div>
+						<h4>Neuroship 成立</h4>
+						<p>怀揣着改变世界的愿景，Neuroship 正式启航</p>
+					</div>
+				</div>
+				<div class="timeline-item">
+					<div class="timeline-dot"></div>
+					<div class="timeline-content">
+						<div class="timeline-year">Phase 1</div>
+						<h4>智能眼镜研发</h4>
+						<p>启动自闭症辅助智能眼镜的研发项目</p>
+					</div>
+				</div>
+				<div class="timeline-item">
+					<div class="timeline-dot"></div>
+					<div class="timeline-content">
+						<div class="timeline-year">Phase 2</div>
+						<h4>基因疗法探索</h4>
+						<p>深入研究自闭症的基因成因，开发创新疗法</p>
+					</div>
+				</div>
+				<div class="timeline-item">
+					<div class="timeline-dot"></div>
+					<div class="timeline-content">
+						<div class="timeline-year">Phase 3</div>
+						<h4>进化工程愿景</h4>
+						<p>通过基因编辑技术推进人类进化的无限可能</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<Footer />
+	</body>
+</html>

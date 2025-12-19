@@ -2,49 +2,661 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, GOALS, LOGOS } from '../consts';
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			/* Hero Section */
+			.hero {
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+				padding: 2rem;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.hero::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 50%;
+				transform: translateX(-50%);
+				width: 150%;
+				height: 100%;
+				background: 
+					radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
+					radial-gradient(ellipse at 30% 70%, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
+					radial-gradient(ellipse at 70% 60%, rgba(244, 114, 182, 0.1) 0%, transparent 35%);
+				pointer-events: none;
+				z-index: -1;
+			}
+
+			/* Neural Network Animation */
+			.neural-network {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				pointer-events: none;
+				z-index: -1;
+				opacity: 0.4;
+			}
+
+			.neuron {
+				position: absolute;
+				width: 6px;
+				height: 6px;
+				background: var(--primary);
+				border-radius: 50%;
+				box-shadow: 0 0 20px var(--primary);
+				animation: pulse 3s ease-in-out infinite;
+			}
+
+			.neuron:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
+			.neuron:nth-child(2) { top: 25%; left: 85%; animation-delay: 0.5s; background: var(--secondary); box-shadow: 0 0 20px var(--secondary); }
+			.neuron:nth-child(3) { top: 60%; left: 5%; animation-delay: 1s; background: var(--accent); box-shadow: 0 0 20px var(--accent); }
+			.neuron:nth-child(4) { top: 75%; left: 90%; animation-delay: 1.5s; }
+			.neuron:nth-child(5) { top: 40%; left: 95%; animation-delay: 2s; background: var(--secondary); box-shadow: 0 0 20px var(--secondary); }
+			.neuron:nth-child(6) { top: 85%; left: 15%; animation-delay: 2.5s; background: var(--accent); box-shadow: 0 0 20px var(--accent); }
+			.neuron:nth-child(7) { top: 10%; left: 50%; animation-delay: 0.3s; }
+			.neuron:nth-child(8) { top: 90%; left: 60%; animation-delay: 1.8s; background: var(--secondary); box-shadow: 0 0 20px var(--secondary); }
+
+			.hero-content {
+				max-width: 900px;
+				animation: fadeInUp 1s ease forwards;
+			}
+
+			.hero-logo {
+				max-width: 500px;
+				width: 90%;
+				height: auto;
+				margin-bottom: 2rem;
+				animation: float 6s ease-in-out infinite;
+			}
+
+			.hero-subtitle {
+				font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+				color: var(--text-secondary);
+				max-width: 700px;
+				margin: 0 auto 3rem;
+				line-height: 1.8;
+			}
+
+			.hero-buttons {
+				display: flex;
+				gap: 1rem;
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+
+			.scroll-indicator {
+				position: absolute;
+				bottom: 2rem;
+				left: 50%;
+				transform: translateX(-50%);
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.5rem;
+				color: var(--text-muted);
+				font-size: 0.875rem;
+				animation: float 3s ease-in-out infinite;
+			}
+
+			.scroll-indicator svg {
+				width: 24px;
+				height: 24px;
+			}
+
+			/* Goals Section */
+			.goals-section {
+				padding: 8rem 2rem;
+				position: relative;
+			}
+
+			.goals-section::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 1px;
+				background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+			}
+
+			.section-badge {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				padding: 0.5rem 1rem;
+				background: rgba(139, 92, 246, 0.1);
+				border: 1px solid var(--border-color);
+				border-radius: 50px;
+				font-size: 0.875rem;
+				color: var(--primary-light);
+				margin-bottom: 1.5rem;
+			}
+
+			.goals-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+				gap: 2rem;
+				max-width: 1200px;
+				margin: 0 auto;
+			}
+
+			.goal-card {
+				background: var(--bg-card);
+				border: 1px solid var(--border-color);
+				border-radius: 24px;
+				padding: 2.5rem;
+				position: relative;
+				overflow: hidden;
+				transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.goal-card::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 3px;
+				background: var(--gradient-primary);
+				opacity: 0;
+				transition: opacity 0.3s ease;
+			}
+
+			.goal-card:hover {
+				transform: translateY(-8px);
+				border-color: var(--primary);
+				box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+			}
+
+			.goal-card:hover::before {
+				opacity: 1;
+			}
+
+			.goal-icon {
+				width: 64px;
+				height: 64px;
+				background: var(--gradient-primary);
+				border-radius: 16px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-bottom: 1.5rem;
+				box-shadow: 0 8px 30px rgba(139, 92, 246, 0.3);
+			}
+
+			.goal-icon svg {
+				width: 32px;
+				height: 32px;
+				color: white;
+			}
+
+			.goal-phase {
+				font-size: 0.75rem;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				color: var(--primary-light);
+				margin-bottom: 0.5rem;
+			}
+
+			.goal-card h3 {
+				font-size: 1.5rem;
+				margin-bottom: 1rem;
+			}
+
+			.goal-card p {
+				color: var(--text-secondary);
+				line-height: 1.7;
+				margin: 0;
+			}
+
+			/* Vision Section */
+			.vision-section {
+				padding: 8rem 2rem;
+				text-align: center;
+				position: relative;
+				background: var(--bg-elevated);
+			}
+
+			.vision-section::before,
+			.vision-section::after {
+				content: '';
+				position: absolute;
+				left: 0;
+				right: 0;
+				height: 1px;
+				background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+			}
+
+			.vision-section::before { top: 0; }
+			.vision-section::after { bottom: 0; }
+
+			.vision-content {
+				max-width: 900px;
+				margin: 0 auto;
+			}
+
+			.vision-quote {
+				font-size: clamp(1.5rem, 3vw, 2.25rem);
+				font-weight: 500;
+				line-height: 1.5;
+				color: var(--text-primary);
+				font-style: italic;
+				position: relative;
+			}
+
+			.vision-quote::before,
+			.vision-quote::after {
+				content: '"';
+				font-size: 4rem;
+				color: var(--primary);
+				opacity: 0.3;
+				position: absolute;
+				font-family: Georgia, serif;
+			}
+
+			.vision-quote::before {
+				top: -2rem;
+				left: -1rem;
+			}
+
+			.vision-quote::after {
+				bottom: -3rem;
+				right: -1rem;
+			}
+
+			/* Features Section */
+			.features-section {
+				padding: 8rem 2rem;
+			}
+
+			.features-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+				gap: 1.5rem;
+				max-width: 1200px;
+				margin: 0 auto;
+			}
+
+			.feature-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 1rem;
+				padding: 1.5rem;
+				background: var(--bg-card);
+				border: 1px solid var(--border-color);
+				border-radius: 16px;
+				transition: all 0.3s ease;
+			}
+
+			.feature-item:hover {
+				border-color: var(--primary);
+				background: var(--bg-card-hover);
+			}
+
+			.feature-icon {
+				width: 48px;
+				height: 48px;
+				background: rgba(139, 92, 246, 0.1);
+				border-radius: 12px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+
+			.feature-icon svg {
+				width: 24px;
+				height: 24px;
+				color: var(--primary-light);
+			}
+
+			.feature-content h4 {
+				font-size: 1.1rem;
+				margin-bottom: 0.5rem;
+			}
+
+			.feature-content p {
+				font-size: 0.95rem;
+				color: var(--text-muted);
+				margin: 0;
+			}
+
+			/* CTA Section */
+			.cta-section {
+				padding: 8rem 2rem;
+				text-align: center;
+				position: relative;
+			}
+
+			.cta-section::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 1px;
+				background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+			}
+
+			.cta-box {
+				max-width: 700px;
+				margin: 0 auto;
+				padding: 4rem;
+				background: var(--gradient-card);
+				border: 1px solid var(--border-color);
+				border-radius: 32px;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.cta-box::before {
+				content: '';
+				position: absolute;
+				top: -50%;
+				left: -50%;
+				width: 200%;
+				height: 200%;
+				background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+				animation: rotate 20s linear infinite;
+			}
+
+			@keyframes rotate {
+				from { transform: rotate(0deg); }
+				to { transform: rotate(360deg); }
+			}
+
+			.cta-content {
+				position: relative;
+				z-index: 1;
+			}
+
+			.cta-box h2 {
+				margin-bottom: 1rem;
+			}
+
+			.cta-box p {
+				margin-bottom: 2rem;
+			}
+
+			/* Responsive */
+			@media (max-width: 768px) {
+				.hero {
+					padding: 1rem;
+					min-height: auto;
+					padding-top: 6rem;
+					padding-bottom: 4rem;
+				}
+
+				.hero-logo {
+					max-width: 300px;
+				}
+
+				.goals-section,
+				.vision-section,
+				.features-section,
+				.cta-section {
+					padding: 4rem 1rem;
+				}
+
+				.goal-card {
+					padding: 2rem;
+				}
+
+				.cta-box {
+					padding: 2rem;
+				}
+
+				.vision-quote::before,
+				.vision-quote::after {
+					display: none;
+				}
+			}
+
+			@keyframes fadeInUp {
+				from {
+					opacity: 0;
+					transform: translateY(40px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			@keyframes float {
+				0%, 100% { transform: translateY(0); }
+				50% { transform: translateY(-10px); }
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; transform: scale(1); }
+				50% { opacity: 0.5; transform: scale(1.2); }
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
+		
+		<!-- Hero Section -->
+		<section class="hero">
+			<div class="neural-network">
+				<div class="neuron"></div>
+				<div class="neuron"></div>
+				<div class="neuron"></div>
+				<div class="neuron"></div>
+				<div class="neuron"></div>
+				<div class="neuron"></div>
+				<div class="neuron"></div>
+				<div class="neuron"></div>
+			</div>
+			
+			<div class="hero-content">
+				<img src={LOGOS.full} alt="Neuroship - ai*behavior" class="hero-logo" />
+				
+				<p class="hero-subtitle">
+					Decoding the rhythms of life, ensuring no mind is left behind, 
+					granting every life the freedom to reach the future.
+				</p>
+				
+				<div class="hero-buttons">
+					<a href="/about" class="btn btn-primary">
+						了解我们
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M5 12h14M12 5l7 7-7 7"/>
+						</svg>
+					</a>
+					<a href="/blog" class="btn btn-secondary">
+						探索博客
+					</a>
+				</div>
+			</div>
+
+			<div class="scroll-indicator">
+				<span>向下滚动</span>
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M12 5v14M5 12l7 7 7-7"/>
+				</svg>
+			</div>
+		</section>
+
+		<!-- Goals Section -->
+		<section class="goals-section">
+			<div class="section-header text-center">
+				<span class="section-badge">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+					</svg>
+					Our Roadmap
+				</span>
+				<h2>我们的<span class="gradient-text">使命与目标</span></h2>
+				<p class="lead">从智能辅助到基因革命，我们正在书写人类进化的新篇章</p>
+			</div>
+
+			<div class="goals-grid">
+				<!-- Short Term Goal -->
+				<div class="goal-card">
+					<div class="goal-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<circle cx="12" cy="12" r="3"/>
+							<path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+						</svg>
+					</div>
+					<span class="goal-phase">短期目标 · Phase 1</span>
+					<h3>{GOALS.shortTerm.title}</h3>
+					<p>{GOALS.shortTerm.description}</p>
+				</div>
+
+				<!-- Mid Term Goal -->
+				<div class="goal-card">
+					<div class="goal-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z"/>
+							<circle cx="7.5" cy="10" r="1.5"/>
+							<circle cx="12" cy="7" r="1.5"/>
+							<circle cx="16.5" cy="10" r="1.5"/>
+						</svg>
+					</div>
+					<span class="goal-phase">中期目标 · Phase 2</span>
+					<h3>{GOALS.midTerm.title}</h3>
+					<p>{GOALS.midTerm.description}</p>
+				</div>
+
+				<!-- Long Term Goal -->
+				<div class="goal-card">
+					<div class="goal-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M12 3L2 12h3v9h14v-9h3L12 3z"/>
+							<path d="M9 21v-6h6v6"/>
+							<circle cx="12" cy="10" r="2"/>
+						</svg>
+					</div>
+					<span class="goal-phase">长期目标 · Phase 3</span>
+					<h3>{GOALS.longTerm.title}</h3>
+					<p>{GOALS.longTerm.description}</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Vision Section -->
+		<section class="vision-section">
+			<div class="vision-content">
+				<span class="section-badge">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+						<circle cx="12" cy="12" r="3"/>
+					</svg>
+					Our Vision
+				</span>
+				<p class="vision-quote">
+					{COMPANY.vision}
+				</p>
+			</div>
+		</section>
+
+		<!-- Features Section -->
+		<section class="features-section">
+			<div class="section-header text-center">
+				<span class="section-badge">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+					</svg>
+					Why Neuroship
+				</span>
+				<h2>为什么选择<span class="gradient-text">Neuroship</span></h2>
+				<p class="lead">我们结合前沿科技与深厚的人文关怀</p>
+			</div>
+
+			<div class="features-grid">
+				<div class="feature-item">
+					<div class="feature-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
+							<path d="M12 6v6l4 2"/>
+						</svg>
+					</div>
+					<div class="feature-content">
+						<h4>前沿研究</h4>
+						<p>持续投入神经科学与基因技术的最前沿研究</p>
+					</div>
+				</div>
+
+				<div class="feature-item">
+					<div class="feature-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+							<circle cx="9" cy="7" r="4"/>
+							<path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+						</svg>
+					</div>
+					<div class="feature-content">
+						<h4>以人为本</h4>
+						<p>始终将患者和家庭的需求放在首位</p>
+					</div>
+				</div>
+
+				<div class="feature-item">
+					<div class="feature-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M9 12l2 2 4-4"/>
+							<path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
+						</svg>
+					</div>
+					<div class="feature-content">
+						<h4>科学严谨</h4>
+						<p>基于循证医学和严格的科学验证</p>
+					</div>
+				</div>
+
+				<div class="feature-item">
+					<div class="feature-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+							<polyline points="7 10 12 15 17 10"/>
+							<line x1="12" y1="15" x2="12" y2="3"/>
+						</svg>
+					</div>
+					<div class="feature-content">
+						<h4>开放合作</h4>
+						<p>与全球顶尖研究机构和医疗团队紧密合作</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- CTA Section -->
+		<section class="cta-section">
+			<div class="cta-box">
+				<div class="cta-content">
+					<h2>加入我们的<span class="gradient-text">使命</span></h2>
+					<p>无论您是研究者、投资者还是想了解更多，我们都期待与您交流</p>
+					<div class="hero-buttons">
+						<a href="mailto:raucvr@berkeley.edu" class="btn btn-primary">
+							联系我们
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+								<polyline points="22,6 12,13 2,6"/>
+							</svg>
+						</a>
+						<a href="/about" class="btn btn-secondary">了解团队</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
 		<Footer />
 	</body>
 </html>
