@@ -3,7 +3,6 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, LOGOS } from '../consts';
-import Scene from '../components/Hero3D/Scene.jsx';
 ---
 
 <!doctype html>
@@ -44,13 +43,23 @@ import Scene from '../components/Hero3D/Scene.jsx';
 				animation: gradientShift 15s ease infinite;
 			}
 
-			/* 3D Canvas Container - 右侧，透明背景 */
-			.hero-3d-container {
+			/* Video Container - 右侧 */
+			.hero-video-container {
 				position: relative;
 				width: 100%;
 				height: 100%;
 				min-height: 600px;
 				z-index: 1;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.hero-video {
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+				max-height: 700px;
 			}
 
 			.hero-content {
@@ -83,18 +92,6 @@ import Scene from '../components/Hero3D/Scene.jsx';
 				background: radial-gradient(circle, rgba(200, 255, 220, 0.4) 0%, transparent 60%);
 				animation: floatOrb 25s ease-in-out infinite reverse;
 				pointer-events: none;
-			}
-
-			/* Hero Logo at top */
-			.hero-logo {
-				margin-bottom: 4rem;
-				opacity: 0;
-				animation: fadeIn 1s ease 0.2s forwards;
-			}
-
-			.hero-logo img {
-				max-width: 400px;
-				height: auto;
 			}
 
 			/* Animated title - dark text on light background */
@@ -273,9 +270,9 @@ import Scene from '../components/Hero3D/Scene.jsx';
 					gap: 2rem;
 				}
 
-				.hero-3d-container {
+				.hero-video-container {
 					min-height: 400px;
-					order: -1; /* 3D在上方 */
+					order: -1; /* 视频在上方 */
 				}
 
 				.hero-content {
@@ -296,19 +293,11 @@ import Scene from '../components/Hero3D/Scene.jsx';
 					padding-right: 1rem;
 				}
 
-				.hero-logo {
-					margin-bottom: 2rem;
-				}
-
-				.hero-logo img {
-					max-width: 240px;
-				}
-
 				.hero-title {
 					font-size: clamp(2rem, 8vw, 3rem);
 				}
 
-				.hero-3d-container {
+				.hero-video-container {
 					min-height: 300px;
 				}
 
@@ -332,15 +321,10 @@ import Scene from '../components/Hero3D/Scene.jsx';
 	<body>
 		<Header />
 		
-		<!-- Hero Section with 3D Neural Network -->
+		<!-- Hero Section with Video Animation -->
 		<section class="hero">
 			<!-- 左侧文字内容 -->
 			<div class="hero-content">
-				<!-- Logo at top -->
-				<div class="hero-logo">
-					<img src={LOGOS.full} alt="Neuroship" />
-				</div>
-				
 				<!-- Animated Title -->
 				<h1 class="hero-title">
 					<span class="line"><span class="line-inner">Decoding</span></span>
@@ -352,9 +336,18 @@ import Scene from '../components/Hero3D/Scene.jsx';
 				</p>
 			</div>
 			
-			<!-- 右侧3D Scene Container -->
-			<div class="hero-3d-container">
-				<Scene client:only="react" />
+			<!-- 右侧视频动画 -->
+			<div class="hero-video-container">
+				<video 
+					class="hero-video"
+					autoplay 
+					loop 
+					muted 
+					playsinline
+					preload="auto"
+				>
+					<source src="/videos/hero.webm" type="video/webm" />
+				</video>
 			</div>
 		</section>
 
