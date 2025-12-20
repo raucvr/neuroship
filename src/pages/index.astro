@@ -10,565 +10,384 @@ import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, GOALS, LOGOS } from '../consts';
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
-			/* Hero Section */
+			/* Hero Section - Isomorphic Labs style */
 			.hero {
 				min-height: 100vh;
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
-				align-items: center;
-				text-align: center;
-				padding: 2rem;
-				position: relative;
-				overflow: hidden;
+				padding: 8rem 2rem 4rem;
 			}
-
-			.hero::before {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 50%;
-				transform: translateX(-50%);
-				width: 150%;
-				height: 100%;
-				background: 
-					radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
-					radial-gradient(ellipse at 30% 70%, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
-					radial-gradient(ellipse at 70% 60%, rgba(244, 114, 182, 0.1) 0%, transparent 35%);
-				pointer-events: none;
-				z-index: -1;
-			}
-
-			/* Neural Network Animation */
-			.neural-network {
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				pointer-events: none;
-				z-index: -1;
-				opacity: 0.4;
-			}
-
-			.neuron {
-				position: absolute;
-				width: 6px;
-				height: 6px;
-				background: var(--primary);
-				border-radius: 50%;
-				box-shadow: 0 0 20px var(--primary);
-				animation: pulse 3s ease-in-out infinite;
-			}
-
-			.neuron:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
-			.neuron:nth-child(2) { top: 25%; left: 85%; animation-delay: 0.5s; background: var(--secondary); box-shadow: 0 0 20px var(--secondary); }
-			.neuron:nth-child(3) { top: 60%; left: 5%; animation-delay: 1s; background: var(--accent); box-shadow: 0 0 20px var(--accent); }
-			.neuron:nth-child(4) { top: 75%; left: 90%; animation-delay: 1.5s; }
-			.neuron:nth-child(5) { top: 40%; left: 95%; animation-delay: 2s; background: var(--secondary); box-shadow: 0 0 20px var(--secondary); }
-			.neuron:nth-child(6) { top: 85%; left: 15%; animation-delay: 2.5s; background: var(--accent); box-shadow: 0 0 20px var(--accent); }
-			.neuron:nth-child(7) { top: 10%; left: 50%; animation-delay: 0.3s; }
-			.neuron:nth-child(8) { top: 90%; left: 60%; animation-delay: 1.8s; background: var(--secondary); box-shadow: 0 0 20px var(--secondary); }
 
 			.hero-content {
-				max-width: 900px;
-				animation: fadeInUp 1s ease forwards;
+				max-width: 1400px;
+				margin: 0 auto;
+				width: 100%;
 			}
 
-			.hero-logo {
-				max-width: 650px;
-				width: 95%;
-				height: auto;
-				margin-bottom: 3rem;
-				filter: drop-shadow(0 10px 40px rgba(139, 92, 246, 0.3));
+			.hero-title {
+				font-size: clamp(2.5rem, 5vw, 3.5rem);
+				font-weight: 200;
+				line-height: 1.2;
+				letter-spacing: -0.03em;
+				margin-bottom: 2rem;
+				max-width: 600px;
 			}
 
-			.hero-subtitle {
-				font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-				color: var(--text-secondary);
-				max-width: 700px;
-				margin: 0 auto 3rem;
-				line-height: 1.8;
+			.hero-description {
+				font-size: 0.875rem;
+				line-height: 1.4;
+				color: var(--text-primary);
+				max-width: 600px;
+				margin-bottom: 0;
+				font-weight: 300;
 			}
 
-			.hero-buttons {
+			/* Main Content */
+			.main-content {
+				max-width: 1400px;
+				margin: 0 auto;
+				padding: 0 2rem;
+			}
+
+			/* Content Grid */
+			.content-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 4rem;
+				padding: 4rem 0;
+				border-top: 1px solid var(--border-color);
+			}
+
+			.content-text p {
+				font-size: 0.875rem;
+				line-height: 1.4;
+				margin-bottom: 1rem;
+			}
+
+			/* News Section */
+			.news-section {
+				padding: 4rem 0;
+				border-top: 1px solid var(--border-color);
+			}
+
+			.news-header {
 				display: flex;
-				gap: 1rem;
-				justify-content: center;
-				flex-wrap: wrap;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 2rem;
 			}
 
-			.scroll-indicator {
-				position: absolute;
-				bottom: 2rem;
-				left: 50%;
-				transform: translateX(-50%);
+			.news-title {
 				display: flex;
-				flex-direction: column;
 				align-items: center;
 				gap: 0.5rem;
-				color: var(--text-muted);
-				font-size: 0.875rem;
-				animation: float 3s ease-in-out infinite;
 			}
 
-			.scroll-indicator svg {
-				width: 24px;
-				height: 24px;
+			.news-eyebrow {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.0625rem;
+				text-transform: uppercase;
+			}
+
+			.news-list {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+
+			.news-item {
+				padding: 1rem 0;
+				border-bottom: 1px solid var(--border-color);
+			}
+
+			.news-item:first-child {
+				padding-top: 0;
+			}
+
+			.news-link {
+				font-size: 0.875rem;
+				color: var(--text-primary);
+				text-decoration: none;
+				transition: color 0.3s ease;
+			}
+
+			.news-link:hover {
+				color: var(--text-muted);
 			}
 
 			/* Goals Section */
 			.goals-section {
-				padding: 8rem 2rem;
-				position: relative;
+				padding: 6rem 0;
+				border-top: 1px solid var(--border-color);
 			}
 
-			.goals-section::before {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				height: 1px;
-				background: linear-gradient(90deg, transparent, var(--border-color), transparent);
-			}
-
-			.section-badge {
-				display: inline-flex;
-				align-items: center;
-				gap: 0.5rem;
-				padding: 0.5rem 1rem;
-				background: rgba(139, 92, 246, 0.1);
-				border: 1px solid var(--border-color);
-				border-radius: 50px;
-				font-size: 0.875rem;
-				color: var(--primary-light);
-				margin-bottom: 1.5rem;
-			}
-
-			.goals-grid {
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-				gap: 2rem;
-				max-width: 1200px;
-				margin: 0 auto;
-			}
-
-			.goal-card {
-				background: var(--bg-card);
-				border: 1px solid var(--border-color);
-				border-radius: 24px;
-				padding: 2.5rem;
-				position: relative;
-				overflow: hidden;
-				transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-			}
-
-			.goal-card::before {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				height: 3px;
-				background: var(--gradient-primary);
-				opacity: 0;
-				transition: opacity 0.3s ease;
-			}
-
-			.goal-card:hover {
-				transform: translateY(-8px);
-				border-color: var(--primary);
-				box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
-			}
-
-			.goal-card:hover::before {
-				opacity: 1;
-			}
-
-			.goal-icon {
-				width: 64px;
-				height: 64px;
-				background: var(--gradient-primary);
-				border-radius: 16px;
+			.goals-header {
 				display: flex;
-				align-items: center;
-				justify-content: center;
-				margin-bottom: 1.5rem;
-				box-shadow: 0 8px 30px rgba(139, 92, 246, 0.3);
+				justify-content: space-between;
+				align-items: flex-start;
+				margin-bottom: 3rem;
 			}
 
-			.goal-icon svg {
-				width: 32px;
-				height: 32px;
-				color: white;
+			.goals-intro {
+				max-width: 600px;
 			}
 
-			.goal-phase {
+			.goals-eyebrow {
 				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.0625rem;
 				text-transform: uppercase;
-				letter-spacing: 0.1em;
-				color: var(--primary-light);
-				margin-bottom: 0.5rem;
-			}
-
-			.goal-card h3 {
-				font-size: 1.5rem;
 				margin-bottom: 1rem;
 			}
 
-			.goal-card p {
+			.goals-title {
+				font-size: clamp(1.5rem, 3vw, 2.25rem);
+				font-weight: 200;
+				margin-bottom: 0;
+			}
+
+			/* Cards Grid */
+			.cards-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1px;
+				background: var(--border-color);
+				border: 1px solid var(--border-color);
+			}
+
+			.goal-card {
+				background: var(--bg-primary);
+				padding: 2rem;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.card-eyebrow {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.0625rem;
+				text-transform: uppercase;
+				margin-bottom: 1rem;
+			}
+
+			.card-title {
+				font-size: 1.375rem;
+				font-weight: 300;
+				margin-bottom: 1rem;
+				flex: 1;
+			}
+
+			.card-link {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				font-size: 1rem;
 				color: var(--text-secondary);
-				line-height: 1.7;
-				margin: 0;
+				text-decoration: none;
+				margin-top: auto;
+			}
+
+			.card-link svg {
+				width: 14px;
+				height: 14px;
+				transition: transform 0.3s ease;
+			}
+
+			.card-link:hover {
+				color: var(--text-muted);
+			}
+
+			.card-link:hover svg {
+				transform: translateX(4px);
 			}
 
 			/* Vision Section */
 			.vision-section {
-				padding: 8rem 2rem;
-				text-align: center;
-				position: relative;
-				background: var(--bg-elevated);
+				padding: 6rem 0;
+				border-top: 1px solid var(--border-color);
 			}
 
-			.vision-section::before,
-			.vision-section::after {
-				content: '';
-				position: absolute;
-				left: 0;
-				right: 0;
-				height: 1px;
-				background: linear-gradient(90deg, transparent, var(--border-color), transparent);
-			}
-
-			.vision-section::before { top: 0; }
-			.vision-section::after { bottom: 0; }
-
-			.vision-content {
-				max-width: 900px;
-				margin: 0 auto;
-			}
-
-			.vision-quote {
-				font-size: clamp(1.5rem, 3vw, 2.25rem);
-				font-weight: 500;
-				line-height: 1.5;
-				color: var(--text-primary);
-				font-style: italic;
-				position: relative;
-			}
-
-			.vision-quote::before,
-			.vision-quote::after {
-				content: '"';
-				font-size: 4rem;
-				color: var(--primary);
-				opacity: 0.3;
-				position: absolute;
-				font-family: Georgia, serif;
-			}
-
-			.vision-quote::before {
-				top: -2rem;
-				left: -1rem;
-			}
-
-			.vision-quote::after {
-				bottom: -3rem;
-				right: -1rem;
-			}
-
-			/* Features Section */
-			.features-section {
-				padding: 8rem 2rem;
-			}
-
-			.features-grid {
+			.vision-grid {
 				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-				gap: 1.5rem;
-				max-width: 1200px;
-				margin: 0 auto;
+				grid-template-columns: 1fr 1fr;
+				gap: 4rem;
 			}
 
-			.feature-item {
-				display: flex;
-				align-items: flex-start;
-				gap: 1rem;
-				padding: 1.5rem;
-				background: var(--bg-card);
-				border: 1px solid var(--border-color);
-				border-radius: 16px;
-				transition: all 0.3s ease;
+			.vision-text {
+				max-width: 500px;
 			}
 
-			.feature-item:hover {
-				border-color: var(--primary);
-				background: var(--bg-card-hover);
-			}
-
-			.feature-icon {
-				width: 48px;
-				height: 48px;
-				background: rgba(139, 92, 246, 0.1);
-				border-radius: 12px;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				flex-shrink: 0;
-			}
-
-			.feature-icon svg {
-				width: 24px;
-				height: 24px;
-				color: var(--primary-light);
-			}
-
-			.feature-content h4 {
-				font-size: 1.1rem;
-				margin-bottom: 0.5rem;
-			}
-
-			.feature-content p {
-				font-size: 0.95rem;
-				color: var(--text-muted);
-				margin: 0;
-			}
-
-			/* CTA Section */
-			.cta-section {
-				padding: 8rem 2rem;
-				text-align: center;
-				position: relative;
-			}
-
-			.cta-section::before {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				height: 1px;
-				background: linear-gradient(90deg, transparent, var(--border-color), transparent);
-			}
-
-			.cta-box {
-				max-width: 700px;
-				margin: 0 auto;
-				padding: 4rem;
-				background: var(--gradient-card);
-				border: 1px solid var(--border-color);
-				border-radius: 32px;
-				position: relative;
-				overflow: hidden;
-			}
-
-			.cta-box::before {
-				content: '';
-				position: absolute;
-				top: -50%;
-				left: -50%;
-				width: 200%;
-				height: 200%;
-				background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
-				animation: rotate 20s linear infinite;
-			}
-
-			@keyframes rotate {
-				from { transform: rotate(0deg); }
-				to { transform: rotate(360deg); }
-			}
-
-			.cta-content {
-				position: relative;
-				z-index: 1;
-			}
-
-			.cta-box h2 {
+			.vision-eyebrow {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.0625rem;
+				text-transform: uppercase;
 				margin-bottom: 1rem;
 			}
 
-			.cta-box p {
+			.vision-statement {
+				font-size: 0.875rem;
+				line-height: 1.4;
 				margin-bottom: 2rem;
 			}
 
+			.vision-image {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.vision-image img {
+				max-width: 100%;
+				height: auto;
+			}
+
+			/* Quote Section */
+			.quote-section {
+				padding: 6rem 0;
+				border-top: 1px solid var(--border-color);
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 4rem;
+				align-items: center;
+			}
+
+			.quote-text {
+				font-size: clamp(1.25rem, 2vw, 1.5rem);
+				font-weight: 300;
+				line-height: 1.4;
+				margin-bottom: 2rem;
+			}
+
+			.quote-author {
+				margin-top: 1.5rem;
+			}
+
+			.author-name {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.0625rem;
+				text-transform: uppercase;
+				margin-bottom: 0.25rem;
+			}
+
+			.author-title {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.0625rem;
+				text-transform: uppercase;
+				color: var(--text-muted);
+			}
+
+			/* Latest Section */
+			.latest-section {
+				padding: 6rem 0;
+				border-top: 1px solid var(--border-color);
+			}
+
+			.latest-eyebrow {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.0625rem;
+				text-transform: uppercase;
+				margin-bottom: 2rem;
+			}
+
+			.latest-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 2rem;
+			}
+
+			.latest-card {
+				display: block;
+				text-decoration: none;
+				color: var(--text-primary);
+			}
+
+			.latest-tag {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.0625rem;
+				text-transform: uppercase;
+				color: var(--text-muted);
+				margin-bottom: 0.5rem;
+			}
+
+			.latest-title {
+				font-size: 1.375rem;
+				font-weight: 300;
+				line-height: 1.3;
+			}
+
+			.latest-card:hover .latest-title {
+				color: var(--text-muted);
+			}
+
+			.latest-footer {
+				margin-top: 2rem;
+			}
+
 			/* Responsive */
+			@media (max-width: 1024px) {
+				.cards-grid {
+					grid-template-columns: 1fr;
+				}
+
+				.latest-grid {
+					grid-template-columns: 1fr;
+					gap: 1.5rem;
+				}
+			}
+
 			@media (max-width: 768px) {
 				.hero {
-					padding: 1rem;
-					min-height: 100vh;
-					min-height: 100dvh;
-					padding-top: 5rem;
-					padding-bottom: 3rem;
+					padding: 6rem 1rem 3rem;
+					min-height: auto;
 				}
 
-				.hero-content {
-					padding: 0 0.5rem;
+				.hero-title {
+					font-size: 2rem;
 				}
 
-				.hero-logo {
-					max-width: 280px;
-					margin-bottom: 2rem;
+				.main-content {
+					padding: 0 1rem;
 				}
 
-				.hero-subtitle {
-					font-size: 1rem;
-					line-height: 1.7;
-					margin-bottom: 2rem;
-				}
-
-				.hero-buttons {
-					flex-direction: column;
-					width: 100%;
-					max-width: 280px;
-				}
-
-				.hero-buttons .btn {
-					width: 100%;
-					justify-content: center;
-				}
-
-				.scroll-indicator {
-					display: none;
+				.content-grid,
+				.vision-grid,
+				.quote-section {
+					grid-template-columns: 1fr;
+					gap: 2rem;
 				}
 
 				.goals-section,
 				.vision-section,
-				.features-section,
-				.cta-section {
-					padding: 3rem 1rem;
+				.quote-section,
+				.latest-section {
+					padding: 3rem 0;
 				}
 
-				.section-header {
-					margin-bottom: 2rem;
-				}
-
-				.section-header h2 {
-					font-size: 1.75rem;
-				}
-
-				.section-header .lead {
-					font-size: 1rem;
-				}
-
-				.goals-grid {
-					grid-template-columns: 1fr;
-					gap: 1.5rem;
+				.goals-header {
+					flex-direction: column;
+					gap: 1rem;
 				}
 
 				.goal-card {
 					padding: 1.5rem;
 				}
 
-				.goal-icon {
-					width: 52px;
-					height: 52px;
-					margin-bottom: 1rem;
+				.quote-image {
+					order: -1;
 				}
 
-				.goal-icon svg {
-					width: 26px;
-					height: 26px;
-				}
-
-				.goal-card h3 {
-					font-size: 1.25rem;
-				}
-
-				.goal-card p {
-					font-size: 0.95rem;
-				}
-
-				.vision-content {
-					padding: 0 0.5rem;
-				}
-
-				.vision-quote {
-					font-size: 1.25rem;
-					padding: 0;
-				}
-
-				.vision-quote::before,
-				.vision-quote::after {
-					display: none;
-				}
-
-				.features-grid {
-					grid-template-columns: 1fr;
+				.news-header {
+					flex-direction: column;
+					align-items: flex-start;
 					gap: 1rem;
 				}
-
-				.feature-item {
-					padding: 1.25rem;
-				}
-
-				.feature-icon {
-					width: 42px;
-					height: 42px;
-				}
-
-				.feature-icon svg {
-					width: 20px;
-					height: 20px;
-				}
-
-				.feature-content h4 {
-					font-size: 1rem;
-				}
-
-				.feature-content p {
-					font-size: 0.9rem;
-				}
-
-				.cta-box {
-					padding: 2rem 1.5rem;
-					border-radius: 20px;
-				}
-
-				.cta-box h2 {
-					font-size: 1.5rem;
-				}
-
-				.cta-box p {
-					font-size: 0.95rem;
-				}
-			}
-
-			/* Extra small devices */
-			@media (max-width: 375px) {
-				.hero-logo {
-					max-width: 240px;
-				}
-
-				.goal-card {
-					padding: 1.25rem;
-				}
-
-				.section-badge {
-					font-size: 0.75rem;
-					padding: 0.4rem 0.8rem;
-				}
-			}
-
-			@keyframes fadeInUp {
-				from {
-					opacity: 0;
-					transform: translateY(40px);
-				}
-				to {
-					opacity: 1;
-					transform: translateY(0);
-				}
-			}
-
-			@keyframes float {
-				0%, 100% { transform: translateY(0); }
-				50% { transform: translateY(-10px); }
-			}
-
-			@keyframes pulse {
-				0%, 100% { opacity: 1; transform: scale(1); }
-				50% { opacity: 0.5; transform: scale(1.2); }
 			}
 		</style>
 	</head>
@@ -577,209 +396,151 @@ import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, GOALS, LOGOS } from '../consts';
 		
 		<!-- Hero Section -->
 		<section class="hero">
-			<div class="neural-network">
-				<div class="neuron"></div>
-				<div class="neuron"></div>
-				<div class="neuron"></div>
-				<div class="neuron"></div>
-				<div class="neuron"></div>
-				<div class="neuron"></div>
-				<div class="neuron"></div>
-				<div class="neuron"></div>
-			</div>
-			
 			<div class="hero-content">
-				<img src={LOGOS.full} alt="Neuroship - ai*behavior" class="hero-logo" />
-				
-				<p class="hero-subtitle">
-					Decoding the rhythms of life, ensuring no mind is left behind, 
-					granting every life the freedom to reach the future.
+				<h1 class="hero-title">
+					Decoding<br/>
+					the rhythms<br/>
+					of life
+				</h1>
+				<p class="hero-description">
+					We're entering a new era of neuroscience — one where AI can unlock deeper understanding of the mind, faster breakthroughs, and life-changing therapies. At Neuroship, we're building that future.
 				</p>
-				
-				<div class="hero-buttons">
-					<a href="/about" class="btn btn-primary">
+			</div>
+		</section>
+
+		<main class="main-content">
+			<!-- Content Section -->
+			<div class="content-grid">
+				<div class="content-text">
+					<p>Neuroship is here to advance human potential by pioneering the intersection of AI and neuroscience.</p>
+					<p>Our interdisciplinary team of neuroscience experts and machine learning specialists has built powerful new AI models that accelerate understanding of the human mind at digital speed.</p>
+					<p>Every day, and with each new breakthrough, we're getting closer to our ambitious mission to ensure no mind is left behind.</p>
+				</div>
+				<div class="news-section-inline">
+					<div class="news-header">
+						<div class="news-title">
+							<span class="news-eyebrow">Latest from Neuroship</span>
+						</div>
+						<a href="/blog" class="arrow-link">
+							View All
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M5 12h14M12 5l7 7-7 7"/>
+							</svg>
+						</a>
+					</div>
+					<ul class="news-list">
+						<li class="news-item">
+							<a href="/blog/ai-era-new-rules" class="news-link">The AI Era: When Old Rules No Longer Apply</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Goals Section -->
+			<section class="goals-section">
+				<div class="goals-header">
+					<div class="goals-intro">
+						<span class="goals-eyebrow">Our Goal</span>
+						<h2 class="goals-title">We're using AI to transform understanding of the human mind.</h2>
+					</div>
+					<a href="/about" class="arrow-link">
 						Learn More
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 							<path d="M5 12h14M12 5l7 7-7 7"/>
 						</svg>
 					</a>
-					<a href="/blog" class="btn btn-secondary">
-						Explore Blog
-					</a>
-				</div>
-			</div>
-
-			<div class="scroll-indicator">
-				<span>Scroll Down</span>
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-					<path d="M12 5v14M5 12l7 7 7-7"/>
-				</svg>
-			</div>
-		</section>
-
-		<!-- Goals Section -->
-		<section class="goals-section">
-			<div class="section-header text-center">
-				<span class="section-badge">
-					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-					</svg>
-					Our Roadmap
-				</span>
-				<h2>Our <span class="gradient-text">Mission & Goals</span></h2>
-				<p class="lead">From smart assistance to genetic revolution, we're writing a new chapter in human evolution</p>
-			</div>
-
-			<div class="goals-grid">
-				<!-- Short Term Goal -->
-				<div class="goal-card">
-					<div class="goal-icon">
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<circle cx="12" cy="12" r="3"/>
-							<path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-						</svg>
-					</div>
-					<span class="goal-phase">Short-term · Phase 1</span>
-					<h3>{GOALS.shortTerm.title}</h3>
-					<p>{GOALS.shortTerm.description}</p>
 				</div>
 
-				<!-- Mid Term Goal -->
-				<div class="goal-card">
-					<div class="goal-icon">
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z"/>
-							<circle cx="7.5" cy="10" r="1.5"/>
-							<circle cx="12" cy="7" r="1.5"/>
-							<circle cx="16.5" cy="10" r="1.5"/>
-						</svg>
-					</div>
-					<span class="goal-phase">Mid-term · Phase 2</span>
-					<h3>{GOALS.midTerm.title}</h3>
-					<p>{GOALS.midTerm.description}</p>
-				</div>
-
-				<!-- Long Term Goal -->
-				<div class="goal-card">
-					<div class="goal-icon">
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M12 3L2 12h3v9h14v-9h3L12 3z"/>
-							<path d="M9 21v-6h6v6"/>
-							<circle cx="12" cy="10" r="2"/>
-						</svg>
-					</div>
-					<span class="goal-phase">Long-term · Phase 3</span>
-					<h3>{GOALS.longTerm.title}</h3>
-					<p>{GOALS.longTerm.description}</p>
-				</div>
-			</div>
-		</section>
-
-		<!-- Vision Section -->
-		<section class="vision-section">
-			<div class="vision-content">
-				<span class="section-badge">
-					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-						<circle cx="12" cy="12" r="3"/>
-					</svg>
-					Our Vision
-				</span>
-				<p class="vision-quote">
-					{COMPANY.vision}
-				</p>
-			</div>
-		</section>
-
-		<!-- Features Section -->
-		<section class="features-section">
-			<div class="section-header text-center">
-				<span class="section-badge">
-					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-					</svg>
-					Why Neuroship
-				</span>
-				<h2>Why Choose <span class="gradient-text">Neuroship</span></h2>
-				<p class="lead">We combine cutting-edge technology with deep human compassion</p>
-			</div>
-
-			<div class="features-grid">
-				<div class="feature-item">
-					<div class="feature-icon">
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
-							<path d="M12 6v6l4 2"/>
-						</svg>
-					</div>
-					<div class="feature-content">
-						<h4>Cutting-edge Research</h4>
-						<p>Continuously investing in the forefront of neuroscience and genetic technology</p>
-					</div>
-				</div>
-
-				<div class="feature-item">
-					<div class="feature-icon">
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-							<circle cx="9" cy="7" r="4"/>
-							<path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-						</svg>
-					</div>
-					<div class="feature-content">
-						<h4>Human-Centered</h4>
-						<p>Always putting the needs of patients and families first</p>
-					</div>
-				</div>
-
-				<div class="feature-item">
-					<div class="feature-icon">
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M9 12l2 2 4-4"/>
-							<path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
-						</svg>
-					</div>
-					<div class="feature-content">
-						<h4>Scientific Rigor</h4>
-						<p>Based on evidence-based medicine and rigorous scientific validation</p>
-					</div>
-				</div>
-
-				<div class="feature-item">
-					<div class="feature-icon">
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-							<polyline points="7 10 12 15 17 10"/>
-							<line x1="12" y1="15" x2="12" y2="3"/>
-						</svg>
-					</div>
-					<div class="feature-content">
-						<h4>Open Collaboration</h4>
-						<p>Working closely with world-leading research institutions and medical teams</p>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<!-- CTA Section -->
-		<section class="cta-section">
-			<div class="cta-box">
-				<div class="cta-content">
-					<h2>Join Our <span class="gradient-text">Mission</span></h2>
-					<p>Whether you're a researcher, investor, or simply want to learn more, we'd love to hear from you</p>
-					<div class="hero-buttons">
-						<a href="mailto:raucvr@berkeley.edu" class="btn btn-primary">
-							Contact Us
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-								<polyline points="22,6 12,13 2,6"/>
+				<div class="cards-grid">
+					<div class="goal-card">
+						<span class="card-eyebrow">Phase 1 · Short-term</span>
+						<h3 class="card-title">{GOALS.shortTerm.title}</h3>
+						<a href="/about" class="card-link">
+							Learn More
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M5 12h14M12 5l7 7-7 7"/>
 							</svg>
 						</a>
-						<a href="/about" class="btn btn-secondary">Meet the Team</a>
+					</div>
+					<div class="goal-card">
+						<span class="card-eyebrow">Phase 2 · Mid-term</span>
+						<h3 class="card-title">{GOALS.midTerm.title}</h3>
+						<a href="/about" class="card-link">
+							Learn More
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M5 12h14M12 5l7 7-7 7"/>
+							</svg>
+						</a>
+					</div>
+					<div class="goal-card">
+						<span class="card-eyebrow">Phase 3 · Long-term</span>
+						<h3 class="card-title">{GOALS.longTerm.title}</h3>
+						<a href="/about" class="card-link">
+							Learn More
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M5 12h14M12 5l7 7-7 7"/>
+							</svg>
+						</a>
 					</div>
 				</div>
-			</div>
-		</section>
+			</section>
+
+			<!-- Vision Section -->
+			<section class="vision-section">
+				<div class="vision-grid">
+					<div class="vision-text">
+						<span class="vision-eyebrow">Neuroship</span>
+						<p class="vision-statement">
+							Our name embodies our belief in the power of technology to navigate the complexities of the human mind. By harnessing AI's powerful capabilities, we can model neural patterns, anticipate behavioral outcomes, and develop innovative therapies to help those with neurological differences thrive.
+						</p>
+						<a href="/about" class="arrow-link">
+							About Us
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M5 12h14M12 5l7 7-7 7"/>
+							</svg>
+						</a>
+					</div>
+					<div class="vision-image">
+						<img src={LOGOS.full} alt="Neuroship" style="max-width: 400px;" />
+					</div>
+				</div>
+			</section>
+
+			<!-- Quote Section -->
+			<section class="quote-section">
+				<div class="quote-content">
+					<p class="quote-text">
+						"I believe there is no more important application for AI than ensuring no mind is left behind and granting every life the freedom to reach the future."
+					</p>
+					<div class="quote-author">
+						<p class="author-name">Takayuki Ishii</p>
+						<p class="author-title">Founder</p>
+					</div>
+				</div>
+				<div class="quote-image">
+					<!-- Placeholder for founder image -->
+				</div>
+			</section>
+
+			<!-- Latest Section -->
+			<section class="latest-section">
+				<span class="latest-eyebrow">Latest from Neuroship</span>
+				<div class="latest-grid">
+					<a href="/blog/ai-era-new-rules" class="latest-card">
+						<span class="latest-tag">Insights</span>
+						<h3 class="latest-title">The AI Era: When Old Rules No Longer Apply</h3>
+					</a>
+				</div>
+				<div class="latest-footer">
+					<a href="/blog" class="arrow-link">
+						More Updates
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M5 12h14M12 5l7 7-7 7"/>
+						</svg>
+					</a>
+				</div>
+			</section>
+		</main>
 
 		<Footer />
 	</body>

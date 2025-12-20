@@ -12,90 +12,82 @@ import { SITE_TITLE, COMPANY, GOALS } from '../consts';
 		<style>
 			/* Page Header */
 			.page-header {
-				padding: 10rem 2rem 6rem;
-				text-align: center;
-				position: relative;
-				overflow: hidden;
+				padding: 8rem 2rem 4rem;
+				max-width: 1400px;
+				margin: 0 auto;
 			}
 
-			.page-header::before {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 50%;
-				transform: translateX(-50%);
-				width: 150%;
-				height: 100%;
-				background: 
-					radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-					radial-gradient(ellipse at 30% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
-				pointer-events: none;
-				z-index: -1;
-			}
-
-			.page-header h1 {
-				font-size: clamp(2.5rem, 6vw, 4rem);
-				margin-bottom: 1.5rem;
-			}
-
-			.page-header .lead {
+			.page-title {
+				font-size: clamp(2.5rem, 5vw, 3.5rem);
+				font-weight: 200;
+				line-height: 1.2;
+				letter-spacing: -0.03em;
+				margin-bottom: 2rem;
 				max-width: 700px;
+			}
+
+			.page-description {
+				font-size: 0.875rem;
+				line-height: 1.4;
+				color: var(--text-primary);
+				max-width: 600px;
+				font-weight: 300;
+			}
+
+			/* Main Content */
+			.main-content {
+				max-width: 1400px;
 				margin: 0 auto;
-				font-size: 1.2rem;
-				color: var(--text-secondary);
+				padding: 0 2rem;
 			}
 
-			/* Section Styles */
-			.about-section {
-				padding: 6rem 2rem;
-				max-width: 1200px;
-				margin: 0 auto;
+			/* Content Grid */
+			.content-section {
+				padding: 4rem 0;
+				border-top: 1px solid var(--border-color);
 			}
 
-			.section-divider {
-				height: 1px;
-				background: linear-gradient(90deg, transparent, var(--border-color), transparent);
-				margin: 0;
+			.section-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+				margin-bottom: 3rem;
 			}
 
-			/* Story Section */
-			.story-section {
+			.section-intro {
+				max-width: 600px;
+			}
+
+			.section-eyebrow {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.0625rem;
+				text-transform: uppercase;
+				margin-bottom: 1rem;
+			}
+
+			.section-title {
+				font-size: clamp(1.5rem, 3vw, 2.25rem);
+				font-weight: 200;
+				margin-bottom: 0;
+			}
+
+			/* Story Grid */
+			.story-grid {
 				display: grid;
 				grid-template-columns: 1fr 1fr;
 				gap: 4rem;
-				align-items: center;
 			}
 
-			.story-content h2 {
-				margin-bottom: 1.5rem;
+			.story-text p {
+				font-size: 0.875rem;
+				line-height: 1.4;
+				margin-bottom: 1rem;
 			}
 
-			.story-content p {
-				margin-bottom: 1.5rem;
-				line-height: 1.8;
-			}
-
-			.story-visual {
-				position: relative;
-			}
-
-			.story-card {
-				background: var(--bg-card);
+			.stats-card {
 				border: 1px solid var(--border-color);
-				border-radius: 24px;
-				padding: 3rem;
-				position: relative;
-				overflow: hidden;
-			}
-
-			.story-card::before {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				height: 3px;
-				background: var(--gradient-primary);
+				padding: 2rem;
 			}
 
 			.stats-grid {
@@ -109,281 +101,145 @@ import { SITE_TITLE, COMPANY, GOALS } from '../consts';
 			}
 
 			.stat-number {
-				font-size: 2.5rem;
-				font-weight: 800;
-				background: var(--gradient-primary);
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
-				background-clip: text;
+				font-size: 2rem;
+				font-weight: 200;
 				margin-bottom: 0.5rem;
 			}
 
 			.stat-label {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
 				color: var(--text-muted);
-				font-size: 0.9rem;
 			}
 
-			/* Mission Section */
-			.mission-section {
-				background: var(--bg-elevated);
-				padding: 6rem 2rem;
-			}
-
-			.mission-grid {
+			/* Values Grid */
+			.values-grid {
 				display: grid;
 				grid-template-columns: repeat(3, 1fr);
-				gap: 2rem;
-				max-width: 1200px;
-				margin: 0 auto;
-			}
-
-			.mission-card {
-				background: var(--bg-card);
+				gap: 1px;
+				background: var(--border-color);
 				border: 1px solid var(--border-color);
-				border-radius: 20px;
+			}
+
+			.value-card {
+				background: var(--bg-primary);
 				padding: 2rem;
-				text-align: center;
-				transition: all 0.3s ease;
 			}
 
-			.mission-card:hover {
-				border-color: var(--primary);
-				transform: translateY(-4px);
-			}
-
-			.mission-icon {
-				width: 60px;
-				height: 60px;
-				background: var(--gradient-primary);
-				border-radius: 16px;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				margin: 0 auto 1.5rem;
-			}
-
-			.mission-icon svg {
-				width: 28px;
-				height: 28px;
-				color: white;
-			}
-
-			.mission-card h3 {
-				font-size: 1.25rem;
+			.value-eyebrow {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.0625rem;
+				text-transform: uppercase;
 				margin-bottom: 1rem;
 			}
 
-			.mission-card p {
-				color: var(--text-secondary);
-				font-size: 0.95rem;
+			.value-title {
+				font-size: 1.375rem;
+				font-weight: 300;
+				margin-bottom: 1rem;
+			}
+
+			.value-description {
+				font-size: 0.875rem;
+				line-height: 1.4;
+				color: var(--text-muted);
 				margin: 0;
 			}
 
 			/* Team Section */
-			.team-section {
-				padding: 6rem 2rem;
-				max-width: 1200px;
-				margin: 0 auto;
-			}
-
-			.team-header {
-				text-align: center;
-				margin-bottom: 4rem;
-			}
-
-			.team-header h2 {
-				margin-bottom: 1rem;
-			}
-
 			.team-grid {
 				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-				gap: 2rem;
+				grid-template-columns: 1fr 1fr;
+				gap: 4rem;
 			}
 
-			.team-card {
-				background: var(--bg-card);
+			.team-member {
 				border: 1px solid var(--border-color);
-				border-radius: 24px;
-				padding: 2.5rem;
-				text-align: center;
-				transition: all 0.4s ease;
-				position: relative;
-				overflow: hidden;
+				padding: 2rem;
 			}
 
-			.team-card::before {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				height: 100px;
-				background: var(--gradient-primary);
-				opacity: 0.1;
-			}
-
-			.team-card:hover {
-				border-color: var(--primary);
-				transform: translateY(-8px);
-				box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
-			}
-
-			.team-avatar {
-				width: 120px;
-				height: 120px;
-				border-radius: 50%;
-				background: var(--gradient-primary);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				margin: 0 auto 1.5rem;
-				position: relative;
-				z-index: 1;
-				font-size: 3rem;
-				color: white;
-				font-weight: 700;
-				box-shadow: 0 8px 30px rgba(139, 92, 246, 0.3);
-			}
-
-			.team-card h3 {
-				font-size: 1.5rem;
+			.member-eyebrow {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.0625rem;
+				text-transform: uppercase;
+				color: var(--text-muted);
 				margin-bottom: 0.5rem;
 			}
 
-			.team-role {
-				color: var(--primary-light);
-				font-weight: 500;
+			.member-name {
+				font-size: 1.5rem;
+				font-weight: 300;
 				margin-bottom: 1rem;
 			}
 
-			.team-bio {
-				color: var(--text-secondary);
-				font-size: 0.95rem;
-				line-height: 1.7;
+			.member-bio {
+				font-size: 0.875rem;
+				line-height: 1.4;
+				color: var(--text-muted);
 				margin-bottom: 1.5rem;
 			}
 
-			.team-links {
+			.member-links {
 				display: flex;
-				justify-content: center;
-				gap: 0.75rem;
+				gap: 1rem;
 			}
 
-			.team-links a {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				width: 40px;
-				height: 40px;
-				border-radius: 10px;
+			.member-links a {
+				font-size: 0.875rem;
+				color: var(--text-secondary);
+				text-decoration: none;
+				transition: color 0.3s ease;
+			}
+
+			.member-links a:hover {
 				color: var(--text-muted);
-				background: var(--bg-elevated);
-				border: 1px solid var(--border-color);
-				transition: all 0.3s ease;
-			}
-
-			.team-links a:hover {
-				color: var(--primary-light);
-				border-color: var(--primary);
-				background: rgba(139, 92, 246, 0.1);
 			}
 
 			/* Timeline Section */
-			.timeline-section {
-				background: var(--bg-elevated);
-				padding: 6rem 2rem;
-			}
-
-			.timeline-header {
-				text-align: center;
-				margin-bottom: 4rem;
-				max-width: 1200px;
-				margin-left: auto;
-				margin-right: auto;
-			}
-
-			.timeline {
-				max-width: 800px;
-				margin: 0 auto;
-				position: relative;
-			}
-
-			.timeline::before {
-				content: '';
-				position: absolute;
-				left: 50%;
-				transform: translateX(-50%);
-				width: 2px;
-				height: 100%;
-				background: var(--border-color);
+			.timeline-list {
+				display: flex;
+				flex-direction: column;
 			}
 
 			.timeline-item {
-				display: flex;
-				justify-content: flex-end;
-				padding-right: 50%;
-				position: relative;
-				margin-bottom: 3rem;
+				display: grid;
+				grid-template-columns: 120px 1fr;
+				gap: 2rem;
+				padding: 2rem 0;
+				border-bottom: 1px solid var(--border-color);
 			}
 
-			.timeline-item:nth-child(even) {
-				justify-content: flex-start;
-				padding-right: 0;
-				padding-left: 50%;
-			}
-
-			.timeline-content {
-				background: var(--bg-card);
-				border: 1px solid var(--border-color);
-				border-radius: 16px;
-				padding: 1.5rem 2rem;
-				max-width: 350px;
-				position: relative;
-				margin-right: 2rem;
-			}
-
-			.timeline-item:nth-child(even) .timeline-content {
-				margin-right: 0;
-				margin-left: 2rem;
-			}
-
-			.timeline-dot {
-				position: absolute;
-				left: 50%;
-				transform: translateX(-50%);
-				width: 16px;
-				height: 16px;
-				background: var(--gradient-primary);
-				border-radius: 50%;
-				border: 3px solid var(--bg-dark);
+			.timeline-item:first-child {
+				padding-top: 0;
 			}
 
 			.timeline-year {
-				color: var(--primary-light);
-				font-weight: 600;
-				font-size: 0.875rem;
-				margin-bottom: 0.5rem;
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
+				color: var(--text-muted);
 			}
 
-			.timeline-content h4 {
+			.timeline-content h3 {
+				font-size: 1.25rem;
+				font-weight: 300;
 				margin-bottom: 0.5rem;
 			}
 
 			.timeline-content p {
+				font-size: 0.875rem;
 				color: var(--text-muted);
-				font-size: 0.9rem;
 				margin: 0;
 			}
 
 			/* Responsive */
-			@media (max-width: 968px) {
-				.story-section {
-					grid-template-columns: 1fr;
-					gap: 3rem;
-				}
-
-				.mission-grid {
+			@media (max-width: 1024px) {
+				.values-grid {
 					grid-template-columns: 1fr;
 				}
 			}
@@ -393,129 +249,36 @@ import { SITE_TITLE, COMPANY, GOALS } from '../consts';
 					padding: 6rem 1rem 3rem;
 				}
 
-				.page-header h1 {
-					font-size: 2rem;
+				.main-content {
+					padding: 0 1rem;
 				}
 
-				.page-header .lead {
-					font-size: 1rem;
+				.content-section {
+					padding: 3rem 0;
 				}
 
-				.about-section,
-				.team-section {
-					padding: 3rem 1rem;
-				}
-
-				.mission-section,
-				.timeline-section {
-					padding: 3rem 1rem;
-				}
-
-				.story-card {
-					padding: 1.5rem;
-				}
-
-				.stats-grid {
-					grid-template-columns: repeat(2, 1fr);
-					gap: 1rem;
-				}
-
-				.stat-item {
-					padding: 1rem;
-				}
-
-				.stat-number {
-					font-size: 2rem;
-				}
-
-				.stat-label {
-					font-size: 0.75rem;
-				}
-
-				.value-grid {
-					gap: 1rem;
-				}
-
-				.value-card {
-					padding: 1.5rem;
-				}
-
-				.value-icon {
-					width: 48px;
-					height: 48px;
-				}
-
-				.value-card h3 {
-					font-size: 1.1rem;
-				}
-
+				.story-grid,
 				.team-grid {
 					grid-template-columns: 1fr;
+					gap: 2rem;
 				}
 
-				.team-card {
-					padding: 1.5rem;
+				.section-header {
+					flex-direction: column;
+					gap: 1rem;
 				}
 
-				.team-avatar {
-					width: 100px;
-					height: 100px;
-					font-size: 2.5rem;
+				.timeline-item {
+					grid-template-columns: 1fr;
+					gap: 0.5rem;
 				}
 
-				.team-card h3 {
-					font-size: 1.25rem;
-				}
-
-				.team-bio {
-					font-size: 0.9rem;
-				}
-
-				.timeline::before {
-					left: 0;
-				}
-
-				.timeline-item,
-				.timeline-item:nth-child(even) {
-					padding-left: 2rem;
-					padding-right: 0;
-					justify-content: flex-start;
-				}
-
-				.timeline-content,
-				.timeline-item:nth-child(even) .timeline-content {
-					margin-left: 1rem;
-					margin-right: 0;
-					max-width: 100%;
-					padding: 1.25rem;
-				}
-
-				.timeline-dot {
-					left: 0;
-				}
-
-				.timeline-header h2 {
-					font-size: 1.75rem;
-				}
-
-				.section-badge {
-					font-size: 0.75rem;
-					padding: 0.4rem 0.8rem;
-				}
-			}
-
-			@media (max-width: 480px) {
 				.stats-grid {
-					grid-template-columns: 1fr 1fr;
-					gap: 0.75rem;
-				}
-
-				.stat-item {
-					padding: 0.875rem;
+					gap: 1rem;
 				}
 
 				.stat-number {
-					font-size: 1.75rem;
+					font-size: 1.5rem;
 				}
 			}
 		</style>
@@ -524,34 +287,37 @@ import { SITE_TITLE, COMPANY, GOALS } from '../consts';
 		<Header />
 		
 		<!-- Page Header -->
-		<section class="page-header">
-			<h1>About <span class="gradient-text">Neuroship</span></h1>
-			<p class="lead">
-				We're dedicated to creating a better future for every life through innovation in neuroscience and genetic technology.
+		<header class="page-header">
+			<h1 class="page-title">
+				Ensuring no mind<br/>
+				is left behind
+			</h1>
+			<p class="page-description">
+				We're dedicated to creating a better future for every life through innovation in neuroscience and AI technology.
 			</p>
-		</section>
+		</header>
 
-		<!-- Story Section -->
-		<section class="about-section">
-			<div class="story-section">
-				<div class="story-content">
-					<h2>Our <span class="gradient-text">Story</span></h2>
-					<p>
-						Neuroship was born from a simple yet profound belief: technology should serve humanity's most fundamental needs—health, understanding, and connection.
-					</p>
-					<p>
-						After witnessing the challenges faced by countless families affected by autism, our founder decided to harness cutting-edge technology to create meaningful change. From smart glasses to gene therapy, we're turning the impossible into reality, one step at a time.
-					</p>
-					<p>
-						Our name "Neuroship" symbolizes a vessel sailing through the realm of neuroscience, carrying hope and innovation toward a more inclusive and healthier future.
-					</p>
+		<main class="main-content">
+			<!-- Story Section -->
+			<section class="content-section">
+				<div class="section-header">
+					<div class="section-intro">
+						<span class="section-eyebrow">Our Story</span>
+						<h2 class="section-title">From a simple belief to a transformative mission.</h2>
+					</div>
 				</div>
-				<div class="story-visual">
-					<div class="story-card">
+
+				<div class="story-grid">
+					<div class="story-text">
+						<p>Neuroship was born from a profound belief: technology should serve humanity's most fundamental needs—health, understanding, and connection.</p>
+						<p>After witnessing the challenges faced by countless families affected by autism, our founder decided to harness cutting-edge technology to create meaningful change. From smart glasses to gene therapy, we're turning the impossible into reality, one step at a time.</p>
+						<p>Our name "Neuroship" symbolizes a vessel sailing through the realm of neuroscience, carrying hope and innovation toward a more inclusive and healthier future.</p>
+					</div>
+					<div class="stats-card">
 						<div class="stats-grid">
 							<div class="stat-item">
 								<div class="stat-number">2023</div>
-								<div class="stat-label">Year Founded</div>
+								<div class="stat-label">Founded</div>
 							</div>
 							<div class="stat-item">
 								<div class="stat-number">∞</div>
@@ -563,152 +329,123 @@ import { SITE_TITLE, COMPANY, GOALS } from '../consts';
 							</div>
 							<div class="stat-item">
 								<div class="stat-number">1</div>
-								<div class="stat-label">Shared Mission</div>
+								<div class="stat-label">Mission</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</section>
+			</section>
 
-		<div class="section-divider"></div>
+			<!-- Values Section -->
+			<section class="content-section">
+				<div class="section-header">
+					<div class="section-intro">
+						<span class="section-eyebrow">Our Values</span>
+						<h2 class="section-title">The principles that guide us forward.</h2>
+					</div>
+				</div>
 
-		<!-- Mission Section -->
-		<section class="mission-section">
-			<div class="team-header">
-				<h2>Our <span class="gradient-text">Core Values</span></h2>
-				<p class="lead">The principles that guide us forward</p>
-			</div>
-			<div class="mission-grid">
-				<div class="mission-card">
-					<div class="mission-icon">
+				<div class="values-grid">
+					<div class="value-card">
+						<span class="value-eyebrow">01</span>
+						<h3 class="value-title">Human-Centered</h3>
+						<p class="value-description">Every research project and product is ultimately aimed at improving human quality of life.</p>
+					</div>
+					<div class="value-card">
+						<span class="value-eyebrow">02</span>
+						<h3 class="value-title">Continuous Innovation</h3>
+						<p class="value-description">Constantly exploring scientific frontiers with innovative thinking to solve the most challenging problems.</p>
+					</div>
+					<div class="value-card">
+						<span class="value-eyebrow">03</span>
+						<h3 class="value-title">Open Collaboration</h3>
+						<p class="value-description">Working closely with world-leading research institutions and medical teams to advance human health.</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- Team Section -->
+			<section class="content-section">
+				<div class="section-header">
+					<div class="section-intro">
+						<span class="section-eyebrow">Our Team</span>
+						<h2 class="section-title">Pioneers united by passion and expertise.</h2>
+					</div>
+					<a href="mailto:raucvr@berkeley.edu" class="arrow-link">
+						Join Us
 						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+							<path d="M5 12h14M12 5l7 7-7 7"/>
 						</svg>
-					</div>
-					<h3>Human-Centered</h3>
-					<p>Every research project and product is ultimately aimed at improving human quality of life</p>
+					</a>
 				</div>
-				<div class="mission-card">
-					<div class="mission-icon">
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<circle cx="12" cy="12" r="10"/>
-							<path d="M12 6v6l4 2"/>
-						</svg>
-					</div>
-					<h3>Continuous Innovation</h3>
-					<p>Constantly exploring scientific frontiers with innovative thinking to solve the most challenging medical problems</p>
-				</div>
-				<div class="mission-card">
-					<div class="mission-icon">
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-							<circle cx="9" cy="7" r="4"/>
-							<path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-						</svg>
-					</div>
-					<h3>Open Collaboration</h3>
-					<p>Working closely with world-leading scientific research institutions and medical teams to advance human health</p>
-				</div>
-			</div>
-		</section>
 
-		<!-- Team Section -->
-		<section class="team-section">
-			<div class="team-header">
-				<h2>Our <span class="gradient-text">Team</span></h2>
-				<p class="lead">Pioneers united by passion and expertise</p>
-			</div>
-			<div class="team-grid">
-				<!-- Founder Card -->
-				<div class="team-card">
-					<div class="team-avatar">T</div>
-					<h3>Takayuki Ishii</h3>
-					<div class="team-role">Founder & CEO</div>
-					<p class="team-bio">
-						Driven by a dream to change the world, dedicated to helping individuals with autism through neuroscience and genetic technology. Believes that the power of technology can give every life the opportunity to shine.
-					</p>
-					<div class="team-links">
-						<a href="https://github.com/raucvr" target="_blank" aria-label="GitHub">
-							<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-								<path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-							</svg>
-						</a>
-						<a href="https://www.linkedin.com/in/takayuki-ishii-55b60221b/" target="_blank" aria-label="LinkedIn">
-							<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-								<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-							</svg>
-						</a>
-						<a href="mailto:raucvr@berkeley.edu" aria-label="Email">
-							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
-								<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-								<polyline points="22,6 12,13 2,6"/>
-							</svg>
-						</a>
+				<div class="team-grid">
+					<div class="team-member">
+						<span class="member-eyebrow">Founder & CEO</span>
+						<h3 class="member-name">Takayuki Ishii</h3>
+						<p class="member-bio">
+							Driven by a dream to change the world, dedicated to helping individuals with autism through neuroscience and AI technology. Believes that the power of technology can give every life the opportunity to shine.
+						</p>
+						<div class="member-links">
+							<a href="https://github.com/raucvr" target="_blank">GitHub</a>
+							<a href="https://www.linkedin.com/in/takayuki-ishii-55b60221b/" target="_blank">LinkedIn</a>
+							<a href="mailto:raucvr@berkeley.edu">Email</a>
+						</div>
+					</div>
+					<div class="team-member">
+						<span class="member-eyebrow">Open Position</span>
+						<h3 class="member-name">Join Our Team</h3>
+						<p class="member-bio">
+							We're looking for like-minded partners. If you're passionate about neuroscience, AI, or product design, we'd love to hear from you.
+						</p>
+						<div class="member-links">
+							<a href="mailto:raucvr@berkeley.edu">Apply Now →</a>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Timeline Section -->
+			<section class="content-section">
+				<div class="section-header">
+					<div class="section-intro">
+						<span class="section-eyebrow">Our Journey</span>
+						<h2 class="section-title">Building the future, one milestone at a time.</h2>
 					</div>
 				</div>
 
-				<!-- Join Us Card -->
-				<div class="team-card">
-					<div class="team-avatar">+</div>
-					<h3>Join Us</h3>
-					<div class="team-role">We're Hiring</div>
-					<p class="team-bio">
-						We're looking for like-minded partners. If you're passionate about neuroscience, genetic technology, AI, or product design, we'd love to hear from you.
-					</p>
-					<div class="team-links">
-						<a href="mailto:raucvr@berkeley.edu" aria-label="Email" style="width: auto; padding: 0 1rem;">
-							<span style="margin-right: 0.5rem;">Apply Now</span>
-							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
-								<path d="M5 12h14M12 5l7 7-7 7"/>
-							</svg>
-						</a>
+				<div class="timeline-list">
+					<div class="timeline-item">
+						<span class="timeline-year">2023</span>
+						<div class="timeline-content">
+							<h3>Neuroship Founded</h3>
+							<p>With a vision to change the world, Neuroship officially sets sail.</p>
+						</div>
+					</div>
+					<div class="timeline-item">
+						<span class="timeline-year">Phase 1</span>
+						<div class="timeline-content">
+							<h3>Smart Glasses R&D</h3>
+							<p>Launching the development of autism-assistive smart glasses powered by AI.</p>
+						</div>
+					</div>
+					<div class="timeline-item">
+						<span class="timeline-year">Phase 2</span>
+						<div class="timeline-content">
+							<h3>Gene Therapy Research</h3>
+							<p>Deep research into genetic causes of autism, developing innovative therapies.</p>
+						</div>
+					</div>
+					<div class="timeline-item">
+						<span class="timeline-year">Phase 3</span>
+						<div class="timeline-content">
+							<h3>Evolution Engineering Vision</h3>
+							<p>Advancing human evolution through gene editing technology.</p>
+						</div>
 					</div>
 				</div>
-			</div>
-		</section>
-
-		<!-- Timeline Section -->
-		<section class="timeline-section">
-			<div class="timeline-header">
-				<h2>Our <span class="gradient-text">Journey</span></h2>
-				<p class="lead">Our journey is just beginning</p>
-			</div>
-			<div class="timeline">
-				<div class="timeline-item">
-					<div class="timeline-dot"></div>
-					<div class="timeline-content">
-						<div class="timeline-year">2023</div>
-						<h4>Neuroship Founded</h4>
-						<p>With a vision to change the world, Neuroship officially sets sail</p>
-					</div>
-				</div>
-				<div class="timeline-item">
-					<div class="timeline-dot"></div>
-					<div class="timeline-content">
-						<div class="timeline-year">Phase 1</div>
-						<h4>Smart Glasses R&D</h4>
-						<p>Launching the development of autism-assistive smart glasses</p>
-					</div>
-				</div>
-				<div class="timeline-item">
-					<div class="timeline-dot"></div>
-					<div class="timeline-content">
-						<div class="timeline-year">Phase 2</div>
-						<h4>Gene Therapy Research</h4>
-						<p>Deep research into genetic causes of autism, developing innovative therapies</p>
-					</div>
-				</div>
-				<div class="timeline-item">
-					<div class="timeline-dot"></div>
-					<div class="timeline-content">
-						<div class="timeline-year">Phase 3</div>
-						<h4>Evolution Engineering Vision</h4>
-						<p>Advancing human evolution through gene editing technology</p>
-					</div>
-				</div>
-			</div>
-		</section>
+			</section>
+		</main>
 
 		<Footer />
 	</body>

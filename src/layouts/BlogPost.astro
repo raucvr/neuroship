@@ -14,42 +14,158 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 	<head>
 		<BaseHead title={title} description={description} />
 		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
+			.article-header {
+				max-width: 1400px;
+				margin: 0 auto;
+				padding: 8rem 2rem 4rem;
 			}
+
+			.article-meta {
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+				margin-bottom: 2rem;
+			}
+
+			.article-date {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
+				color: var(--text-muted);
+			}
+
+			.article-tag {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
+				color: var(--text-muted);
+			}
+
+			.article-title {
+				font-size: clamp(2rem, 4vw, 3rem);
+				font-weight: 200;
+				line-height: 1.2;
+				letter-spacing: -0.02em;
+				margin-bottom: 1.5rem;
+				max-width: 800px;
+			}
+
+			.article-description {
+				font-size: 1rem;
+				line-height: 1.5;
+				color: var(--text-muted);
+				max-width: 600px;
+				font-weight: 300;
+			}
+
 			.hero-image {
-				width: 100%;
+				max-width: 1400px;
+				margin: 0 auto;
+				padding: 0 2rem 4rem;
 			}
+
 			.hero-image img {
 				display: block;
+				width: 100%;
+				height: auto;
+			}
+
+			.article-content {
+				max-width: 720px;
 				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
+				padding: 0 2rem 6rem;
 			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
+
+			.article-content h2 {
+				font-size: 1.5rem;
+				font-weight: 300;
+				margin-top: 3rem;
+				margin-bottom: 1rem;
 			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
+
+			.article-content h3 {
+				font-size: 1.25rem;
+				font-weight: 400;
+				margin-top: 2rem;
+				margin-bottom: 0.75rem;
 			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
+
+			.article-content p {
+				font-size: 0.875rem;
+				line-height: 1.6;
+				margin-bottom: 1.5rem;
 			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
+
+			.article-content a {
+				color: var(--text-primary);
+				text-decoration: underline;
+				text-underline-offset: 3px;
 			}
-			.last-updated-on {
+
+			.article-content a:hover {
+				color: var(--text-muted);
+			}
+
+			.article-content ul,
+			.article-content ol {
+				margin-bottom: 1.5rem;
+				font-size: 0.875rem;
+				line-height: 1.6;
+			}
+
+			.article-content blockquote {
+				font-size: 1rem;
+				font-weight: 300;
+				border-left: 2px solid var(--border-color);
+				padding-left: 1.5rem;
+				margin: 2rem 0;
+				color: var(--text-muted);
+			}
+
+			.updated-date {
+				font-size: 0.75rem;
+				color: var(--text-muted);
 				font-style: italic;
+				margin-top: 0.5rem;
+			}
+
+			.back-link {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				font-size: 0.875rem;
+				color: var(--text-secondary);
+				text-decoration: none;
+				margin-bottom: 2rem;
+			}
+
+			.back-link:hover {
+				color: var(--text-muted);
+			}
+
+			.back-link svg {
+				width: 14px;
+				height: 14px;
+			}
+
+			@media (max-width: 768px) {
+				.article-header {
+					padding: 6rem 1rem 3rem;
+				}
+
+				.hero-image {
+					padding: 0 1rem 2rem;
+				}
+
+				.article-content {
+					padding: 0 1rem 4rem;
+				}
+
+				.article-title {
+					font-size: 1.75rem;
+				}
 			}
 		</style>
 	</head>
@@ -58,24 +174,35 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<Header />
 		<main>
 			<article>
-				<div class="hero-image">
-					{heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
+				<header class="article-header">
+					<a href="/blog" class="back-link">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M19 12H5M12 19l-7-7 7-7"/>
+						</svg>
+						Back to Blog
+					</a>
+					<div class="article-meta">
+						<span class="article-date">
 							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
+						</span>
+						<span class="article-tag">Insights</span>
 					</div>
+					<h1 class="article-title">{title}</h1>
+					{description && <p class="article-description">{description}</p>}
+					{updatedDate && (
+						<p class="updated-date">
+							Last updated on <FormattedDate date={updatedDate} />
+						</p>
+					)}
+				</header>
+				
+				{heroImage && (
+					<div class="hero-image">
+						<img src={heroImage} alt="" />
+					</div>
+				)}
+				
+				<div class="article-content">
 					<slot />
 				</div>
 			</article>
