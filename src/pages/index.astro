@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Scene from '../components/Hero3D/Scene.jsx';
 import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, LOGOS } from '../consts';
 ---
 
@@ -42,26 +43,17 @@ import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, LOGOS } from '../consts';
 				animation: gradientShift 15s ease infinite;
 			}
 
-			/* Video Container - 右侧，视频本身有透明背景 */
-			.hero-video-container {
+			/* 3D Scene Container - 右侧，不与文字重叠 */
+			.hero-3d-container {
 				position: absolute;
-				top: -15%;
-				right: 13%;
-				width: 90%;
-				height: 130%;
-				z-index: 1;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				pointer-events: none;
-			}
-
-			.hero-video {
-				width: 100%;
+				top: 50%;
+				right: -5%;
+				transform: translateY(-50%);
+				width: 60%;
 				height: 100%;
-				object-fit: contain;
-				object-position: center center;
-				transform: scale(1.35);
+				z-index: 1;
+				pointer-events: none;
+				background: transparent;
 			}
 
 			.hero-content {
@@ -284,11 +276,14 @@ import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, LOGOS } from '../consts';
 					padding-top: 6rem;
 				}
 
-				.hero-video-container {
+				.hero-3d-container {
 					position: relative;
 					width: 100%;
 					height: 400px;
-					order: -1; /* 视频在上方 */
+					top: 0;
+					right: 0;
+					transform: none;
+					order: -1;
 				}
 
 				.hero-content {
@@ -325,8 +320,8 @@ import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, LOGOS } from '../consts';
 					font-size: clamp(2rem, 8vw, 3rem);
 				}
 
-				.hero-video-container {
-					height: 280px;
+				.hero-3d-container {
+					height: 300px;
 				}
 
 				.main-content {
@@ -349,7 +344,7 @@ import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, LOGOS } from '../consts';
 	<body>
 		<Header />
 		
-		<!-- Hero Section with Video Animation -->
+		<!-- Hero Section with 3D Animation -->
 		<section class="hero">
 			<!-- 左侧文字内容 -->
 			<div class="hero-content">
@@ -369,18 +364,9 @@ import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, LOGOS } from '../consts';
 				</p>
 			</div>
 			
-			<!-- 右侧视频动画 -->
-			<div class="hero-video-container">
-				<video 
-					class="hero-video"
-					autoplay 
-					loop 
-					muted 
-					playsinline
-					preload="auto"
-				>
-					<source src="/videos/hero.webm" type="video/webm" />
-				</video>
+			<!-- 右侧3D动画 -->
+			<div class="hero-3d-container">
+				<Scene client:only="react" />
 			</div>
 		</section>
 
