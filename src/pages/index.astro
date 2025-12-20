@@ -27,8 +27,7 @@ import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, LOGOS } from '../consts';
 			/* Hero Section - Light gradient background like Isomorphic Labs */
 			.hero {
 				min-height: 100vh;
-				display: grid;
-				grid-template-columns: 1fr 1fr;
+				display: flex;
 				align-items: center;
 				padding: 8rem 2rem 4rem;
 				position: relative;
@@ -43,30 +42,44 @@ import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, LOGOS } from '../consts';
 				animation: gradientShift 15s ease infinite;
 			}
 
-			/* Video Container - 右侧 */
+			/* Video Container - 右侧，占满整个区域 */
 			.hero-video-container {
-				position: relative;
-				width: 100%;
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 55%;
 				height: 100%;
-				min-height: 600px;
 				z-index: 1;
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				overflow: hidden;
 			}
 
 			.hero-video {
 				width: 100%;
 				height: 100%;
-				object-fit: contain;
-				max-height: 700px;
+				object-fit: cover;
+				object-position: center;
 			}
 
 			.hero-content {
-				max-width: 700px;
+				max-width: 600px;
 				padding-left: 4rem;
 				position: relative;
 				z-index: 2;
+			}
+
+			/* Hero Logo */
+			.hero-logo {
+				margin-bottom: 3rem;
+				opacity: 0;
+				animation: fadeIn 1s ease 0.2s forwards;
+			}
+
+			.hero-logo img {
+				max-width: 380px;
+				height: auto;
 			}
 
 			/* Floating orb effects for light background */
@@ -266,12 +279,14 @@ import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, LOGOS } from '../consts';
 			/* Responsive */
 			@media (max-width: 1024px) {
 				.hero {
-					grid-template-columns: 1fr;
-					gap: 2rem;
+					flex-direction: column;
+					padding-top: 6rem;
 				}
 
 				.hero-video-container {
-					min-height: 400px;
+					position: relative;
+					width: 100%;
+					height: 400px;
 					order: -1; /* 视频在上方 */
 				}
 
@@ -279,6 +294,10 @@ import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, LOGOS } from '../consts';
 					padding-left: 2rem;
 					padding-right: 2rem;
 					max-width: 100%;
+				}
+
+				.hero-logo img {
+					max-width: 300px;
 				}
 			}
 
@@ -293,12 +312,20 @@ import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, LOGOS } from '../consts';
 					padding-right: 1rem;
 				}
 
+				.hero-logo {
+					margin-bottom: 2rem;
+				}
+
+				.hero-logo img {
+					max-width: 240px;
+				}
+
 				.hero-title {
 					font-size: clamp(2rem, 8vw, 3rem);
 				}
 
 				.hero-video-container {
-					min-height: 300px;
+					height: 280px;
 				}
 
 				.main-content {
@@ -325,6 +352,11 @@ import { SITE_TITLE, SITE_DESCRIPTION, COMPANY, LOGOS } from '../consts';
 		<section class="hero">
 			<!-- 左侧文字内容 -->
 			<div class="hero-content">
+				<!-- Logo -->
+				<div class="hero-logo">
+					<img src={LOGOS.full} alt="Neuroship" />
+				</div>
+				
 				<!-- Animated Title -->
 				<h1 class="hero-title">
 					<span class="line"><span class="line-inner">Decoding</span></span>
