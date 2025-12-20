@@ -41,6 +41,6 @@ export const SOCIAL_LINKS = {
 
 // Logo paths
 export const LOGOS = {
-  icon: "/images/removebg-preview.png",  // 透明背景icon
-  full: "/images/removebg-logo.png",     // 透明背景大Logo
+  icon: "/images/icon_nnbg.jpeg",   // 高分辨率icon
+  full: "/images/logo_nbg.jpeg",    // 高分辨率大Logo
 };
