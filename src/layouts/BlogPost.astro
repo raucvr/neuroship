@@ -99,43 +99,13 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				padding-top: 0.5rem;
 			}
 
-			/* Table of Contents - Left sidebar */
+			/* Table of Contents - Thinking Machines exact style */
 			.toc {
-				width: 200px;
+				width: 220px;
 				flex-shrink: 0;
 				position: sticky;
 				top: 100px;
 				align-self: flex-start;
-				max-height: calc(100vh - 120px);
-				overflow-y: auto;
-			}
-
-			.toc-list {
-				list-style: none;
-				padding: 0;
-				margin: 0;
-			}
-
-			.toc-item {
-				margin-bottom: 0.5rem;
-			}
-
-			.toc-link {
-				font-size: 0.9rem; /* 14.4px */
-				line-height: 1.4;
-				color: rgb(103, 103, 103);
-				text-decoration: none;
-				transition: color 0.2s ease;
-				display: block;
-			}
-
-			.toc-link:hover {
-				color: var(--text-primary);
-			}
-
-			.toc-link.active {
-				color: var(--text-primary);
-				font-weight: 500;
 			}
 
 			/* Article content - Right side */

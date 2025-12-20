@@ -507,3 +507,38 @@ input:focus, textarea:focus {
 	margin-bottom: 0.35rem;
 	color: rgb(40, 40, 40);
 }
+
+/* Blog TOC - Thinking Machines exact style */
+.toc {
+	width: 220px;
+}
+
+.toc-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.toc-item {
+	margin: 0 0 0.35rem; /* 5.6px */
+	padding: 0;
+}
+
+.toc-link {
+	font-family: Georgia, 'Times New Roman', serif;
+	font-size: 0.9rem; /* 14.4px */
+	font-weight: 400;
+	line-height: 1.4; /* 20.16px */
+	color: rgb(103, 103, 103);
+	text-decoration: none;
+	display: inline;
+	transition: color 0.2s ease;
+}
+
+.toc-link:hover {
+	color: rgb(40, 40, 40);
+}
+
+.toc-link.active {
+	color: rgb(40, 40, 40);
+}
