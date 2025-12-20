@@ -14,11 +14,17 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 	<head>
 		<BaseHead title={title} description={description} />
 		<style>
-			/* Thinking Machines exact style - serif font, precise spacing */
+			/* Thinking Machines exact style with TOC sidebar */
+			main {
+				max-width: 990px;
+				margin: 0 auto;
+				padding: 0 1rem;
+			}
+
 			.article-header {
 				max-width: 660px;
 				margin: 0 auto;
-				padding: 8rem 2rem 0;
+				padding: 8rem 0 2rem;
 				text-align: center;
 			}
 
@@ -29,7 +35,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				font-size: 0.875rem;
 				color: var(--text-muted);
 				text-decoration: none;
-				margin-bottom: 2.5rem;
+				margin-bottom: 2rem;
 				transition: color 0.3s ease;
 			}
 
@@ -58,7 +64,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				justify-content: center;
 				gap: 2rem;
 				margin-top: 1rem;
-				margin-bottom: 2rem;
+				margin-bottom: 0;
 			}
 
 			.article-author {
@@ -76,7 +82,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			.hero-image {
 				max-width: 800px;
 				margin: 0 auto;
-				padding: 0 2rem 2rem;
+				padding: 0 0 2rem;
 			}
 
 			.hero-image img {
@@ -85,30 +91,80 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				height: auto;
 			}
 
+			/* Two-column layout: TOC + Content */
+			.article-body {
+				position: relative;
+				display: flex;
+				gap: 2rem;
+				padding-top: 0.5rem;
+			}
+
+			/* Table of Contents - Left sidebar */
+			.toc {
+				width: 200px;
+				flex-shrink: 0;
+				position: sticky;
+				top: 100px;
+				align-self: flex-start;
+				max-height: calc(100vh - 120px);
+				overflow-y: auto;
+			}
+
+			.toc-list {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+
+			.toc-item {
+				margin-bottom: 0.5rem;
+			}
+
+			.toc-link {
+				font-size: 0.9rem; /* 14.4px */
+				line-height: 1.4;
+				color: rgb(103, 103, 103);
+				text-decoration: none;
+				transition: color 0.2s ease;
+				display: block;
+			}
+
+			.toc-link:hover {
+				color: var(--text-primary);
+			}
+
+			.toc-link.active {
+				color: var(--text-primary);
+				font-weight: 500;
+			}
+
+			/* Article content - Right side */
 			.article-content {
+				flex: 1;
 				max-width: 660px;
-				margin: 0 auto;
-				padding: 0 2rem 4rem;
+				padding-bottom: 4rem;
 			}
 
 			.article-content h2 {
-				font-family: Georgia, 'Times New Roman', serif;
-				font-size: 1.45rem; /* ~23px */
-				font-weight: 600;
-				line-height: 1.4;
-				margin-top: 2.5rem;
-				margin-bottom: 1rem;
-				color: var(--text-primary);
+				font-family: Georgia, 'Times New Roman', serif !important;
+				font-size: 1.1rem !important; /* ~17.6px - closer to body text */
+				font-weight: 700 !important;
+				line-height: 1.4 !important;
+				margin-top: 1.5rem !important;
+				margin-bottom: 0.75rem !important;
+				color: rgb(40, 40, 40) !important;
+				scroll-margin-top: 100px;
+				letter-spacing: normal !important;
 			}
 
 			.article-content h3 {
 				font-family: Georgia, 'Times New Roman', serif;
-				font-size: 1.25rem;
+				font-size: 1.125rem; /* 18px */
 				font-weight: 600;
 				line-height: 1.4;
-				margin-top: 2rem;
+				margin-top: 0.8rem;
 				margin-bottom: 0.75rem;
-				color: var(--text-primary);
+				color: rgb(40, 40, 40);
 			}
 
 			.article-content p {
@@ -193,17 +249,45 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				margin-top: 0.5rem;
 			}
 
-			@media (max-width: 768px) {
-				.article-header {
-					padding: 6rem 1.25rem 0;
+			/* Footer navigation */
+			.article-footer {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				max-width: 660px;
+				margin: 0 auto;
+				padding: 2rem 0;
+				border-top: 1px solid var(--border-color);
+			}
+
+			.footer-link {
+				font-size: 0.875rem;
+				color: var(--text-muted);
+				text-decoration: none;
+				transition: color 0.2s ease;
+			}
+
+			.footer-link:hover {
+				color: var(--text-primary);
+			}
+
+			@media (max-width: 1024px) {
+				.toc {
+					display: none;
 				}
 
-				.hero-image {
-					padding: 0 1.25rem 1.5rem;
+				.article-body {
+					justify-content: center;
 				}
 
 				.article-content {
-					padding: 0 1.25rem 3rem;
+					padding: 0 1rem 3rem;
+				}
+			}
+
+			@media (max-width: 768px) {
+				.article-header {
+					padding: 6rem 1rem 1.5rem;
 				}
 
 				.article-title {
@@ -211,8 +295,8 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				}
 
 				.article-content h2 {
-					font-size: 1.25rem;
-					margin-top: 2rem;
+					font-size: 1rem;
+					margin-top: 1.25rem;
 				}
 
 				.article-content p {
@@ -257,11 +341,74 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 					</div>
 				)}
 				
-				<div class="article-content">
-					<slot />
+				<div class="article-body">
+					<!-- Table of Contents - Generated by JavaScript -->
+					<nav class="toc" aria-label="Table of contents">
+						<ul class="toc-list" id="toc-list">
+							<!-- TOC items will be generated by JS -->
+						</ul>
+					</nav>
+					
+					<div class="article-content" id="article-content">
+						<slot />
+					</div>
 				</div>
+
+				<footer class="article-footer">
+					<a href="/blog" class="footer-link">← Back to Blog</a>
+					<a href="#" class="footer-link" id="back-to-top">Back to top ↑</a>
+				</footer>
 			</article>
 		</main>
 		<Footer />
+
+		<script is:inline>
+			// Generate Table of Contents from h2 headings
+			document.addEventListener('DOMContentLoaded', () => {
+				const content = document.getElementById('article-content');
+				const tocList = document.getElementById('toc-list');
+				const headings = content.querySelectorAll('h2');
+
+				headings.forEach((heading, index) => {
+					// Create ID for heading if not exists
+					if (!heading.id) {
+						heading.id = `section-${index + 1}`;
+					}
+
+					// Create TOC item
+					const li = document.createElement('li');
+					li.className = 'toc-item';
+					
+					const a = document.createElement('a');
+					a.className = 'toc-link';
+					a.href = `#${heading.id}`;
+					a.textContent = heading.textContent;
+					
+					li.appendChild(a);
+					tocList.appendChild(li);
+				});
+
+				// Highlight active TOC item on scroll
+				const tocLinks = document.querySelectorAll('.toc-link');
+				
+				const observer = new IntersectionObserver((entries) => {
+					entries.forEach(entry => {
+						if (entry.isIntersecting) {
+							tocLinks.forEach(link => link.classList.remove('active'));
+							const activeLink = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+							if (activeLink) activeLink.classList.add('active');
+						}
+					});
+				}, { rootMargin: '-100px 0px -66%' });
+
+				headings.forEach(heading => observer.observe(heading));
+
+				// Back to top
+				document.getElementById('back-to-top')?.addEventListener('click', (e) => {
+					e.preventDefault();
+					window.scrollTo({ top: 0, behavior: 'smooth' });
+				});
+			});
+		</script>
 	</body>
 </html>

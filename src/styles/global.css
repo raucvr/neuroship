@@ -469,3 +469,41 @@ input:focus, textarea:focus {
 	margin: 2rem 0;
 	font-weight: 300;
 }
+
+/* Blog Post - Thinking Machines style */
+.article-content h2 {
+	font-family: Georgia, 'Times New Roman', serif;
+	font-size: 1.1rem; /* ~17.6px */
+	font-weight: 700;
+	line-height: 1.4;
+	margin-top: 1.5rem;
+	margin-bottom: 0.75rem;
+	color: rgb(40, 40, 40);
+	letter-spacing: normal;
+}
+
+.article-content h3 {
+	font-family: Georgia, 'Times New Roman', serif;
+	font-size: 1rem;
+	font-weight: 700;
+	line-height: 1.4;
+	margin-top: 1.25rem;
+	margin-bottom: 0.5rem;
+	color: rgb(40, 40, 40);
+}
+
+.article-content p {
+	font-family: Georgia, 'Times New Roman', serif;
+	font-size: 1.0625rem; /* 17px */
+	line-height: 1.65;
+	margin-bottom: 1.33rem;
+	color: rgb(40, 40, 40);
+}
+
+.article-content li {
+	font-family: Georgia, 'Times New Roman', serif;
+	font-size: 0.9rem;
+	line-height: 1.4;
+	margin-bottom: 0.35rem;
+	color: rgb(40, 40, 40);
+}
