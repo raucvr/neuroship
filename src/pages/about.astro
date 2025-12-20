@@ -10,28 +10,33 @@ import { SITE_TITLE, COMPANY, GOALS } from '../consts';
 	<head>
 		<BaseHead title={`About - ${SITE_TITLE}`} description="Learn about Neuroship's mission, vision, and team" />
 		<style>
-			/* Page Header */
-			.page-header {
-				padding: 8rem 2rem 4rem;
+			/* Vision Section - Hero */
+			.vision-hero {
+				padding: 10rem 2rem 6rem;
+				background: var(--bg-hero-gradient, linear-gradient(0deg, rgb(230, 247, 255), rgb(233, 255, 233)));
+			}
+
+			.vision-content {
 				max-width: 1400px;
 				margin: 0 auto;
 			}
 
-			.page-title {
-				font-size: clamp(2.5rem, 5vw, 3.5rem);
-				font-weight: 200;
-				line-height: 1.2;
-				letter-spacing: -0.03em;
+			.vision-eyebrow {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.0625rem;
+				text-transform: uppercase;
 				margin-bottom: 2rem;
-				max-width: 700px;
+				display: block;
 			}
 
-			.page-description {
-				font-size: 0.875rem;
-				line-height: 1.4;
-				color: var(--text-primary);
-				max-width: 600px;
-				font-weight: 300;
+			.vision-statement {
+				font-size: clamp(1.75rem, 4vw, 2.5rem);
+				font-weight: 200;
+				line-height: 1.3;
+				letter-spacing: -0.02em;
+				max-width: 900px;
+				margin: 0;
 			}
 
 			/* Main Content */
@@ -72,46 +77,71 @@ import { SITE_TITLE, COMPANY, GOALS } from '../consts';
 				margin-bottom: 0;
 			}
 
-			/* Story Grid */
-			.story-grid {
+			/* Story Grid - The meaning of Neuroship */
+			.story-intro {
+				font-size: 1rem;
+				line-height: 1.6;
+				margin-bottom: 3rem;
+				max-width: 800px;
+			}
+
+			.meaning-grid {
 				display: grid;
-				grid-template-columns: 1fr 1fr;
-				gap: 4rem;
-			}
-
-			.story-text p {
-				font-size: 0.875rem;
-				line-height: 1.4;
-				margin-bottom: 1rem;
-			}
-
-			.stats-card {
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1px;
+				background: var(--border-color);
 				border: 1px solid var(--border-color);
+			}
+
+			.meaning-card {
+				background: var(--bg-primary);
 				padding: 2rem;
 			}
 
-			.stats-grid {
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-				gap: 2rem;
-			}
-
-			.stat-item {
-				text-align: center;
-			}
-
-			.stat-number {
-				font-size: 2rem;
-				font-weight: 200;
+			.meaning-phase {
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.0625rem;
+				text-transform: uppercase;
+				color: var(--text-muted);
 				margin-bottom: 0.5rem;
 			}
 
-			.stat-label {
+			.meaning-keyword {
 				font-size: 0.75rem;
-				font-weight: 400;
+				font-weight: 500;
 				letter-spacing: 0.05em;
 				text-transform: uppercase;
+				margin-bottom: 1rem;
+				color: var(--text-primary);
+			}
+
+			.meaning-title {
+				font-size: 1.375rem;
+				font-weight: 300;
+				margin-bottom: 1rem;
+			}
+
+			.meaning-neuro,
+			.meaning-ship {
+				font-size: 0.875rem;
+				line-height: 1.5;
+				margin-bottom: 1rem;
+			}
+
+			.meaning-neuro strong,
+			.meaning-ship strong {
+				font-weight: 500;
+			}
+
+			.meaning-summary {
+				font-size: 0.875rem;
+				line-height: 1.5;
 				color: var(--text-muted);
+				font-style: italic;
+				margin: 0;
+				padding-top: 1rem;
+				border-top: 1px solid var(--border-color);
 			}
 
 			/* Values Grid */
@@ -239,13 +269,14 @@ import { SITE_TITLE, COMPANY, GOALS } from '../consts';
 
 			/* Responsive */
 			@media (max-width: 1024px) {
+				.meaning-grid,
 				.values-grid {
 					grid-template-columns: 1fr;
 				}
 			}
 
 			@media (max-width: 768px) {
-				.page-header {
+				.vision-hero {
 					padding: 6rem 1rem 3rem;
 				}
 
@@ -257,7 +288,6 @@ import { SITE_TITLE, COMPANY, GOALS } from '../consts';
 					padding: 3rem 0;
 				}
 
-				.story-grid,
 				.team-grid {
 					grid-template-columns: 1fr;
 					gap: 2rem;
@@ -272,66 +302,83 @@ import { SITE_TITLE, COMPANY, GOALS } from '../consts';
 					grid-template-columns: 1fr;
 					gap: 0.5rem;
 				}
-
-				.stats-grid {
-					gap: 1rem;
-				}
-
-				.stat-number {
-					font-size: 1.5rem;
-				}
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		
-		<!-- Page Header -->
-		<header class="page-header">
-			<h1 class="page-title">
-				Ensuring no mind<br/>
-				is left behind
-			</h1>
-			<p class="page-description">
-				We're dedicated to creating a better future for every life through innovation in neuroscience and AI technology.
-			</p>
+		<!-- Vision Hero -->
+		<header class="vision-hero">
+			<div class="vision-content">
+				<span class="vision-eyebrow">Our Vision</span>
+				<p class="vision-statement">
+					Decoding the rhythms of life, ensuring no mind is left behind, granting every life the freedom to reach the future.
+				</p>
+			</div>
 		</header>
 
 		<main class="main-content">
-			<!-- Story Section -->
+			<!-- Story Section - The Meaning of Neuroship -->
 			<section class="content-section">
 				<div class="section-header">
 					<div class="section-intro">
 						<span class="section-eyebrow">Our Story</span>
-						<h2 class="section-title">From a simple belief to a transformative mission.</h2>
+						<h2 class="section-title">The evolving meaning of Neuroship</h2>
 					</div>
 				</div>
 
-				<div class="story-grid">
-					<div class="story-text">
-						<p>Neuroship was born from a profound belief: technology should serve humanity's most fundamental needs—health, understanding, and connection.</p>
-						<p>After witnessing the challenges faced by countless families affected by autism, our founder decided to harness cutting-edge technology to create meaningful change. From smart glasses to gene therapy, we're turning the impossible into reality, one step at a time.</p>
-						<p>Our name "Neuroship" symbolizes a vessel sailing through the realm of neuroscience, carrying hope and innovation toward a more inclusive and healthier future.</p>
+				<p class="story-intro">
+					Our name "Neuroship" carries layered meanings that evolve with our mission. As we progress through each phase, the interpretation of both "Neuro" and "Ship" transforms to reflect our deepening commitment to human potential.
+				</p>
+
+				<div class="meaning-grid">
+					<!-- Phase 1: Smart Glasses -->
+					<div class="meaning-card">
+						<span class="meaning-phase">Phase 1 · Short-term</span>
+						<span class="meaning-keyword">Vessel & Connection</span>
+						<h3 class="meaning-title">Smart Glasses</h3>
+						<p class="meaning-neuro">
+							<strong>Neuro:</strong> Points directly to autism and neurodevelopmental diversity. Smart glasses serve as an "external neural pathway," bridging gaps in social signal recognition and emotional understanding.
+						</p>
+						<p class="meaning-ship">
+							<strong>Ship:</strong> Symbolizes an "empowerment platform." The glasses are a vessel carrying intelligent algorithms, like a small boat guiding users safely through the complex ocean of social interaction.
+						</p>
+						<p class="meaning-summary">
+							"Neural Vessel" — Not a replacement, but a carrier and assistant, helping individuals with autism establish smooth neural connections with the outside world.
+						</p>
 					</div>
-					<div class="stats-card">
-						<div class="stats-grid">
-							<div class="stat-item">
-								<div class="stat-number">2023</div>
-								<div class="stat-label">Founded</div>
-							</div>
-							<div class="stat-item">
-								<div class="stat-number">∞</div>
-								<div class="stat-label">Possibilities</div>
-							</div>
-							<div class="stat-item">
-								<div class="stat-number">3</div>
-								<div class="stat-label">Core Goals</div>
-							</div>
-							<div class="stat-item">
-								<div class="stat-number">1</div>
-								<div class="stat-label">Mission</div>
-							</div>
-						</div>
+
+					<!-- Phase 2: Gene Therapy -->
+					<div class="meaning-card">
+						<span class="meaning-phase">Phase 2 · Mid-term</span>
+						<span class="meaning-keyword">Craftsmanship & Navigation</span>
+						<h3 class="meaning-title">Gene Therapy</h3>
+						<p class="meaning-neuro">
+							<strong>Neuro:</strong> The goal shifts from external assistance to fundamental code. We focus on the biological essence of the nervous system and synaptic repair.
+						</p>
+						<p class="meaning-ship">
+							<strong>-ship:</strong> Takes on its suffix meaning (like "craftsmanship"). Symbolizes the mastery of precise neural gene editing — a testament to our expertise in gene-craftsmanship.
+						</p>
+						<p class="meaning-summary">
+							"Neural Mastery" — Ship evolves from a physical vessel to a state of professional excellence, navigating patients from limited function toward health.
+						</p>
+					</div>
+
+					<!-- Phase 3: Evolution Engineering -->
+					<div class="meaning-card">
+						<span class="meaning-phase">Phase 3 · Long-term</span>
+						<span class="meaning-keyword">Starship & Evolution</span>
+						<h3 class="meaning-title">Evolution Engineering</h3>
+						<p class="meaning-neuro">
+							<strong>Neuro:</strong> Represents "super-brain" or "enhanced intelligence." No longer limited to treating conditions, but expanding human cognitive boundaries, perception depth, and neural efficiency.
+						</p>
+						<p class="meaning-ship">
+							<strong>Ship:</strong> Takes on the character of a "Starship" or "Noah's Ark." Gene editing becomes the propulsion system, carrying humanity away from random natural evolution toward an intentional "post-human" future.
+						</p>
+						<p class="meaning-summary">
+							"Civilization's Vessel" — Not just technology, but the ship carrying human civilization toward higher dimensions of existence.
+						</p>
 					</div>
 				</div>
 			</section>
@@ -426,21 +473,21 @@ import { SITE_TITLE, COMPANY, GOALS } from '../consts';
 						<span class="timeline-year">Phase 1</span>
 						<div class="timeline-content">
 							<h3>Smart Glasses R&D</h3>
-							<p>Launching the development of autism-assistive smart glasses powered by AI.</p>
+							<p>Developing AI-powered smart glasses as an "external neural pathway" for autism assistance.</p>
 						</div>
 					</div>
 					<div class="timeline-item">
 						<span class="timeline-year">Phase 2</span>
 						<div class="timeline-content">
 							<h3>Gene Therapy Research</h3>
-							<p>Deep research into genetic causes of autism, developing innovative therapies.</p>
+							<p>Mastering the craftsmanship of neural gene editing to treat autism at its roots.</p>
 						</div>
 					</div>
 					<div class="timeline-item">
 						<span class="timeline-year">Phase 3</span>
 						<div class="timeline-content">
-							<h3>Evolution Engineering Vision</h3>
-							<p>Advancing human evolution through gene editing technology.</p>
+							<h3>Evolution Engineering</h3>
+							<p>Building the starship that carries humanity toward intentional evolution.</p>
 						</div>
 					</div>
 				</div>
